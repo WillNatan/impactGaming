@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Connexion</title>
+		<link rel="stylesheet" href="{{ asset('vendors/bootstrap/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendors/fontawesome/css/all.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendors/themify-icons/themify-icons.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendors/linericon/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendors/owl-carousel/owl.theme.default.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendors/owl-carousel/owl.carousel.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendors/flat-icon/font/flaticon.css') }}">
+
+		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/middle-form.css') }}">
+	</head>
+	<body class="banner-bg">
+		<div class="container">
+			<div class="middle-form">
+				<form method="post" class="shadow-lg p-5">
+					<h1>Connexion</h1>
+					<div class="form-group">
+						{% if error %}
+							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						{% endif %}
+
+						{% if app.user %}
+							<div class="mb-3">
+								<p>Vous êtes connecté en tant que
+									{{ app.user.username }}</p>
+								<a href="{{ path('app_logout') }}">Déconnexion</a>
+							</div>
+						{% endif %}
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputEmail">Email</label>
+						<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword">Mot de passe</label>
+						<input type="password" name="password" id="inputPassword" class="form-control" required>
+					</div>
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<div class="form-group text-center">
+						<button class="btn btn-primary" type="submit">
+							Connexion
+						</button>
+						<a href="{{ path('home') }}" class="btn btn-link">Retour à l'accueil</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

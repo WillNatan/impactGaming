@@ -1,0 +1,15 @@
+.middle-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.middle-form form{
+    background-color: white;
+    max-width: 500px;
+}
+
+.banner-bg{
+    background: url('../img/banner/hero-banner.png') center center;
+}
