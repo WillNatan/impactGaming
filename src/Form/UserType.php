@@ -17,9 +17,9 @@ class UserType extends AbstractType
         $builder
             ->add('email', TextType::class, ['label'=>'Adresse Email', 'attr'=>['class'=>'form-control']])
             ->add('roles', ChoiceType::class, ['label'=>'Rôles utilisateur', 'choices'=> [
-                'ROLE_USER'=> 'Utilisateur',
-                'ROLE_ADMIN' => 'Administrateur',
-                'ROLE_BUSINESS' => 'Partenaire/Organisateur'
+                'Utilisateur'=> 'ROLE_USER',
+                'Administrateur' => 'ROLE_ADMIN',
+                'Partenaire/Organisateur' => 'ROLE_BUSINESS'
             ],
             'attr'=>['class'=>'form-control'],
             'multiple'=>true
