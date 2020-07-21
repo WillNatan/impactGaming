@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Créer un utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Créer un utilisateur</h1>
+
+    {{ include('admin/user/_form.html.twig') }}
+
+    <a href="{{ path('user_index') }}" class="btn btn-info mt-3"><i class="fa fa-arrow-left"></i></a>
+{% endblock %}

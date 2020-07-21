@@ -1,0 +1,11 @@
+<div class="card shadow">
+	<div class="card-body">
+		{{ form_start(form) }}
+		<div class="form-group">
+			{{ form_widget(form) }}</div>
+		<div class="form-group">
+			<button class="btn btn-success">{{ button_label|default('Créer') }}</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+</div>

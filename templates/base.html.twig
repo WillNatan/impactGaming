@@ -17,13 +17,14 @@
     <link rel="stylesheet" href="{{ asset('vendors/flat-icon/font/flaticon.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
 <header class="header_area">
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container box_1620">
+            <div class="container-fluid box_1620">
                 <a class="navbar-brand logo_h" href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar"></span>
@@ -56,10 +57,15 @@
                         </li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                         {% if app.user %}
-                        <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fa fa-user"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('profile') }}">Mon compte</a></li>
+                        {% if app.user and is_granted("ROLE_ADMIN") %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('admin') }}">Administration</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link " href="{{ path('app_logout') }}"><button class="btn btn-info btn-sm"><i class="fa fa-door-open"></i></button></a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}"><i class="fa fa-user-plus"></i></a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}"><i class="fa fa-user"></i></a></li>
+                        
                         {% endif %}
                         
                     </ul>
@@ -68,14 +74,6 @@
         </nav>
     </div>
 </header>
-<section class="hero-banner">
-    <div class="container text-center">
-        <span class="hero-banner-icon"><i class="flaticon-sing"></i></span>
-        <p>20 - 22 January, 2019, Buffelo City</p>
-        <h1>UX CONFERENCE 2019</h1>
-        <a class="button button-header" href="#">Buy Ticket</a>
-    </div>
-</section>
 {% block body %}{% endblock %}
 <footer class="footer-area">
     <div class="container">

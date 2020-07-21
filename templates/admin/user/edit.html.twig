@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Modification Utilisateur</h1>
+
+    {{ include('admin/user/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <div class="d-flex flex-wrap mt-3">
+    <a href="{{ path('user_index') }}" class="btn btn-info mr-1"><i class="fa fa-arrow-left"></i></a>
+
+    {{ include('admin/user/_delete_form.html.twig') }}</div>
+{% endblock %}
