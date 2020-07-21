@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/admin/utilisateurs")
+ * @Route("/administration/utilisateurs")
  */
 class UserController extends AbstractController
 {
