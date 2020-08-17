@@ -38,7 +38,7 @@
 				<div class="event-card row no-gutters">
 					<div class="col-md-2">
 						<div class="event-date h-100">
-							<p class="event-day">{{ event.launchDate|date('d') }}<br/><span class="month">{{ event.launchDate|format_datetime(pattern='MMM',locale='fr') }}</span>
+							<p class="event-day">{{ event.launchDate|date('d') }}<br/><span class="month">{{ event.launchDate|format_datetime(pattern='MMM',locale='en') }}</span>
 							</p>
 						</div>
 					</div>
@@ -58,9 +58,9 @@
 								<i class="fa fa-map-marker-alt"></i>
 								{{ event.place }}
 								-
-								{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='fr') }}
+								{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}
 								-
-								{{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='fr') }}</span>
+								{{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='en') }}</span>
 							<p class="event-price text-center text-md-left">{{ event.price }}
 								€</p>
 						</div>

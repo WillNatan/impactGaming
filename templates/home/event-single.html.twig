@@ -6,7 +6,7 @@
 			<span class="hero-banner-icon">
 				<i class="fa fa-gamepad"></i>
 			</span>
-			<p>{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='fr') }} - {{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='fr') }}, {{ event.place }}</p>
+			<p>{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }} - {{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='en') }}, {{ event.place }}</p>
 			<h1>{{ event.name }}</h1>
 
 		</div>
@@ -42,9 +42,9 @@
 		<div class="row mt-5">
 			<div class="col-md-4 mb-3 text-center text-md-left">
 				<h2>Informations générales</h2>
-                <span class="mt-3">Date de début: {{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='fr') }}</span>
+                <span class="mt-3">Date de début: {{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}</span>
                 <hr>
-                <span>Date de fin: {{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='fr') }}</span>
+                <span>Date de fin: {{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='en') }}</span>
                 <hr>
                 <span>Capacités: {% if event.ticketNumber == 0  %}Places illimitées{% else %}{{ event.ticketNumber }}  place(s) disponible(s){% endif %}</span>
                 <hr>
