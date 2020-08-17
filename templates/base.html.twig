@@ -18,6 +18,9 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="{{ asset('custom/style.css') }}">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
@@ -34,9 +37,9 @@
 
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav justify-content-end">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">Évènements</a></li>
-                        <li class="nav-item"><a class="nav-link" href="speaker.html">Organisations</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('home') }}">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('events') }}">Évènements</a></li>
+                        {# <li class="nav-item"><a class="nav-link" href="speaker.html">Organisations</a>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Communauté</a>
@@ -54,8 +57,10 @@
                                 <li class="nav-item"><a class="nav-link" href="blog.html">Blog Single</a></li>
                                 <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a></li>
                             </ul>
-                        </li>
+                        </li> 
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        #}
+                        
                         {% if app.user %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('profile') }}">Mon compte</a></li>
                         {% if app.user and is_granted("ROLE_ADMIN") %}
@@ -80,7 +85,7 @@
         <div class="row">
             <div class="col-lg-3  col-md-6 col-sm-6">
                 <div class="single-footer-widget">
-                    <h6>About Umeet</h6>
+                    <h6>A propos</h6>
                     <p>
                         The world has become so fast paced that people don’t want to stand by reading a page of information to be  they would much rather look at a presentation and understand the message. It has come to a point where images and videos are used more to
                     </p>
@@ -88,28 +93,35 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="single-footer-widget">
-                    <h6>Navigation Links</h6>
+                    <h6>Liens de navigation</h6>
                     <div class="row">
                         <div class="col">
                             <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Feature</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Portfolio</a></li>
-                            </ul>
-                        </div>
-                        <div class="col">
-                            <ul>
-                                <li><a href="#">Team</a></li>
-                                <li><a href="#">Pricing</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><a href="{{ path('home')}}">Accueil</a></li>
+                                <li><a href="{{ path('events')}}">Evènements</a></li>
+                                {% if app.user %}
+                                    <li><a href="{{ path('profile')}}">Mon compte</a></li>
+                                {% else %}
+                                    <li><a href="{{ path('app_login')}}">Connexion</a></li>
+                                    <li><a href="{{ path('app_register')}}">Inscription</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3  col-md-6 col-sm-6">
+            <div class="col">
+                <div class="row align-items-center">
+                <p class="col-lg-8 col-sm-12 footer-text m-0 text-center text-lg-left"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous droits réservés | ImpactGaming 
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                <div class="col-lg-4 col-sm-12 footer-social text-center text-lg-right">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            </div>
+            {# <div class="col-lg-3  col-md-6 col-sm-6">
                 <div class="single-footer-widget">
                     <h6>Newsletter</h6>
                     <p>
@@ -125,25 +137,25 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3  col-md-6 col-sm-6">
+            </div> #}
+            {# <div class="col-lg-3  col-md-6 col-sm-6">
                 <div class="single-footer-widget mail-chimp">
                     <h6 class="mb-20">InstaFeed</h6>
                     <ul class="instafeed d-flex flex-wrap">
-                        <li><img src="img/instagram/i1.jpg" alt=""></li>
-                        <li><img src="img/instagram/i2.jpg" alt=""></li>
-                        <li><img src="img/instagram/i3.jpg" alt=""></li>
-                        <li><img src="img/instagram/i4.jpg" alt=""></li>
-                        <li><img src="img/instagram/i5.jpg" alt=""></li>
-                        <li><img src="img/instagram/i6.jpg" alt=""></li>
-                        <li><img src="img/instagram/i7.jpg" alt=""></li>
-                        <li><img src="img/instagram/i8.jpg" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i1.jpg')}}" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i2.jpg')}}" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i3.jpg')}}" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i4.jpg')}}" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i5.jpg')}}" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i6.jpg')}}" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i7.jpg')}}" alt=""></li>
+                        <li><img src="{{ asset('img/instagram/i8.jpg')}}" alt=""></li>
                     </ul>
                 </div>
-            </div>
+            </div> #}
         </div>
     </div>
-    <div class="footer-bottom">
+    {# <div class="footer-bottom">
         <div class="container">
             <div class="row align-items-center">
                 <p class="col-lg-8 col-sm-12 footer-text m-0 text-center text-lg-left"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -157,17 +169,17 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
 </footer>
-<script src="vendors/jquery/jquery-3.2.1.min.js"></script>
-<script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-<script src="vendors/Magnific-Popup/jquery.magnific-popup.min.js"></script>
-<script src="js/jquery.ajaxchimp.min.js"></script>
-<script src="js/mail-script.js"></script>
-<script src="js/countdown.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/main.js"></script>
+<script src="{{ asset('vendors/jquery/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('vendors/bootstrap/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('vendors/owl-carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('vendors/Magnific-Popup/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('js/jquery.ajaxchimp.min.js')}}"></script>
+<script src="{{ asset('js/mail-script.js') }}"></script>
+<script src="{{ asset('js/countdown.js') }}"></script>
+<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 
 {% block javascripts %}{% endblock %}
 

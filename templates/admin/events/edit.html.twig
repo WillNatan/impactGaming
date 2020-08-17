@@ -1,0 +1,21 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier evènement
+{% endblock %}
+
+{% block body %}
+	<div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Modifier un évènement</h6>
+
+		</div>
+		<div class="card-body">
+
+			{{ include('admin/events/_form.html.twig', {'button_label': 'Update'}) }}
+
+			<a href="{{ path('events_index') }}">back to list</a>
+
+			{{ include('admin/events/_delete_form.html.twig') }}
+		</div>
+	</div>
+{% endblock %}

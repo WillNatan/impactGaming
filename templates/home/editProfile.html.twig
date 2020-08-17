@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<section>
+		<div class="container mb-5">
+			<h1 class="text-center">Mon compte</h1>
+			<h4 class="text-center">Modification</h4>
+			<div class="row mt-5">
+				<div class="col-md-12">
+					{{ form_start(form, {'attr':{'class':'row'}}) }}
+					<div class="col-md-12">
+						<div class="form-group">
+							{{ form_label(form.email) }}
+							{{ form_widget(form.email) }}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							{{ form_label(form.firstName) }}
+							{{ form_widget(form.firstName) }}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							{{ form_label(form.lastName) }}
+							{{ form_widget(form.lastName) }}
+						</div>
+					</div>
+					<div class="col-md-12">
+						<h4 class="text-center">Mot de passe</h4>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							{{form_label(form.oldPassword)}}
+							{{form_widget(form.oldPassword)}}
+							{% for errorPassword in app.flashes('passwordError') %}
+								<div id="errorPassword" data-error="{{ errorPassword }}"></div>
+								<script>
+									Toastify({
+										text: document.querySelector('#errorPassword').dataset.error, 
+										duration: 10000,
+										close: true,
+										gravity : "bottom",
+										position: "left",
+										backgroundColor: "linear-gradient(to right, #CB356B, #BD3F32)",
+										stopOnFocus: true
+										}).showToast();
+								</script>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							{{form_label(form.newPassword)}}
+							{{form_widget(form.newPassword)}}
+							{% for newPasswordError in app.flashes('newPasswordError') %}
+								
+								<div id="errorPassword" data-error="{{ newPasswordError }}"></div>
+								<script>
+									Toastify({
+										text: document.querySelector('#errorPassword').dataset.error, 
+										duration: 3000,
+										close: true,
+										gravity : "bottom",
+										position: "left",
+										backgroundColor: "linear-gradient(to right, #CB356B, #BD3F32)",
+										stopOnFocus: true
+										}).showToast();
+								</script>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group text-center">
+							<button type="submit" class="btn btn-success">Modifier</button>
+							<a href="{{ path('profile') }}"><button type="button" class="btn btn-info">Retour à mon profil</button></a>
+						</div>
+					</div>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

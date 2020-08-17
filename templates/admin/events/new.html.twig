@@ -1,0 +1,22 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouvel évènement
+{% endblock %}
+
+{% block body %}
+	<div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Créer un évènement</h6>
+			
+		</div>
+		<div class="card-body">
+        {{ include('admin/events/_form.html.twig') }}
+        <a href="{{ path('events_index') }}">back to list</a>
+        </div>
+	</div>
+	
+
+	
+
+	
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe
+{% endblock %}
+
+{% block body %}
+	<div class="container" style="height:70vh">
+		<div class="content d-flex justify-content-center align-items-center flex-column h-100">
+			<h1>Réinitialisation du mot de passe</h1>
+
+			{{ form_start(resetForm, {'attr':{'class':'w-100'}}) }}
+			<div class="form-group">
+				{{ form_row(resetForm.plainPassword) }}
+			</div>
+
+					{# Revoir les erreurs de formulaire dans l'entité #}
+					<div class="form-group text-center">
+						<button class="btn btn-primary mt-3 mb-3">Réinitialiser</button>
+					</div>
+					{{ form_end(resetForm) }}
+				</div>
+			</div>
+		{% endblock %}

@@ -32,11 +32,9 @@
 									{{ app.user.username }}</p>
 								<a href="{{ path('app_logout') }}">Déconnexion</a>
 							</div>
-						{% endif %}
-					</div>
+							{% else %}
 
-
-					<div class="form-group">
+							<div class="form-group">
 						<label for="inputEmail">Email</label>
 						<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
 					</div>
@@ -50,8 +48,19 @@
 						<button class="btn btn-primary" type="submit">
 							Connexion
 						</button>
+
+					</div>
+					<div class="form-group text-center">
 						<a href="{{ path('home') }}" class="btn btn-link">Retour à l'accueil</a>
 					</div>
+					<div class="form-group text-center">
+						<a href="{{ path('app_forgot_password_request') }}" class="btn btn-link">Mot de passe oublié ?</a>
+					</div>
+						{% endif %}
+					</div>
+
+
+					
 				</form>
 			</div>
 		</div>

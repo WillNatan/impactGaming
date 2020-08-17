@@ -1,0 +1,76 @@
+{#
+/**
+ * @file
+ * Twitter Bootstrap Sliding pagination control implementation.
+ *
+ * View that can be used with the pagination module
+ * from the Twitter Bootstrap CSS Toolkit
+ * https://getbootstrap.com/2.3.2/components.html#pagination 
+ *
+ * This view has been ported from Pagerfanta progect
+ * https://github.com/whiteoctober/Pagerfanta/
+ * https://github.com/whiteoctober/Pagerfanta/blob/master/src/Pagerfanta/View/TwitterBootstrapView.php
+ *
+ * @author Pablo Díez <pablodip@gmail.com>
+ * @author Jan Sorgalla <jsorgalla@gmail.com>
+ * @author Artem Ponomarenko <imenem@inbox.ru>
+ */
+#}
+
+{% if pageCount > 1 %}
+	<div class="btn-toolbar justify-content-center mt-3 mb-3" role="toolbar" aria-label="Toolbar with button groups">
+		<div class="btn-group mr-2 flex-wrap justify-content-center" role="group" aria-label="First group">
+			{% if previous is defined %}
+				<a rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="btn btn-secondary">
+						&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}
+					</a>
+			{% else %}
+				<a type="button" class="btn btn-secondary disabled">&laquo;&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
+
+			{% endif %}
+
+			{% if startPage > 1 %}
+				<a href="{{ path(route, query|merge({(pageParameterName): 1})) }}" class="btn btn-secondary">
+					1
+				</a>
+				{% if startPage == 3 %}
+					<a href="{{ path(route, query|merge({(pageParameterName): 2})) }}" class="btn btn-secondary">
+						1
+					</a>
+				{% elseif startPage != 2 %}
+					<a type="button" class="btn btn-secondary disabled">&hellip;</a>
+
+				{% endif %}
+			{% endif %}
+
+			{% for page in pagesInRange %}
+				{% if page != current %}
+					<a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="btn btn-secondary">
+						{{ page }}
+					</a>
+				{% else %}
+					<a type="button" class="btn btn-secondary active">{{ page }}</a>
+				{% endif %}
+
+			{% endfor %}
+
+            {% if pageCount > endPage %}
+				{% if pageCount > (endPage + 1) %}
+					{% if pageCount > (endPage + 2) %}
+                    <a type="button" class="btn btn-secondary disabled">&hellip;</a>
+					{% else %}
+						<a href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}" class="btn btn-secondary">{{ pageCount -1 }}</a>
+					{% endif %}
+				{% endif %}
+				<a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" class="btn btn-secondary">{{ pageCount }}</a>
+			{% endif %}
+
+            {% if next is defined %}
+				<a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="btn btn-secondary">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</a>
+			{% else %}
+            <a type="button" class="btn btn-secondary disabled">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;&raquo;</a>
+			{% endif %}
+			
+		</div>
+	</div>
+{% endif %}

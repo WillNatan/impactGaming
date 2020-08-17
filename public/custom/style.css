@@ -1,0 +1,91 @@
+.event-list {
+  margin: 50px 0;
+}
+
+.event-list .event-card {
+  position: relative;
+  margin-top: 40px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  background: #fff;
+  border-radius: 2px;
+}
+
+.event-list .event-card .event-date {
+  background-color: rgb(247, 74, 74);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-list .event-card .event-date .event-day {
+  font-size: 4rem;
+  color: #fff;
+  display: block;
+  line-height: 1;
+  text-align: center;
+  font-weight: lighter;
+}
+
+.event-list .event-card .event-date .event-day .month {
+  font-size: 1rem;
+  color: #fff;
+  display: block;
+  letter-spacing: 15px;
+  font-weight: bold;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+.row > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-list .event-card .event-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.event-list .event-card .event-infos {
+  padding: 0 15px;
+}
+
+.event-list .event-card .event-infos .event-title {
+  font-size: 2.2rem;
+  margin: 0;
+}
+
+.event-list .event-card .event-infos .event-place {
+  font-size: 1rem;
+  
+}
+
+.event-list .event-card .event-infos .event-price {
+  font-size: 1.125rem;
+}
+
+.event-list .event-card .event-links {
+  height: 100%;
+}
+
+.event-list .event-card .event-links a {
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  color: #a8a8a8;
+  transition: 0.2s ease-in-out;
+  height: 100%;
+}
+
+.event-list .event-card .event-links a:hover {
+  color: #292929;
+  background-color: #b9b9b9;
+}

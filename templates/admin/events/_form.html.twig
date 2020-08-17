@@ -1,0 +1,65 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.websiteLink) }}
+        {{ form_widget(form.websiteLink) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.place) }}
+        {{ form_widget(form.place) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.launchDate) }}
+        {{ form_widget(form.launchDate) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.stopDate) }}
+        {{ form_widget(form.stopDate) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.price) }}
+        {{ form_widget(form.price) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.category) }}
+        {{ form_widget(form.category) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.socialLinks) }}
+        {{ form_widget(form.socialLinks) }}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+        {{ form_label(form.availableGames) }}
+        {{ form_widget(form.availableGames) }}
+        </div>
+    </div>
+    </div>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

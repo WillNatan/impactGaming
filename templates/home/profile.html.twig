@@ -2,6 +2,34 @@
 
 {% block body %}
 	<section>
+	{% for success in app.flashes('successWithPw') %}
+								<div id="success" data-error="{{ success }}"></div>
+								<script>
+									Toastify({
+										text: document.querySelector('#success').dataset.error, 
+										duration: 10000,
+										close: true,
+										gravity : "bottom",
+										position: "left",
+										backgroundColor: "linear-gradient(to right, #11998e, #38ef7d)",
+										stopOnFocus: true
+										}).showToast();
+								</script>
+							{% endfor %}
+							{% for success in app.flashes('success') %}
+								<div id="success" data-error="{{ success }}"></div>
+								<script>
+									Toastify({
+										text: document.querySelector('#success').dataset.error, 
+										duration: 10000,
+										close: true,
+										gravity : "bottom",
+										position: "left",
+										backgroundColor: "linear-gradient(to right, #11998e, #38ef7d)",
+										stopOnFocus: true
+										}).showToast();
+								</script>
+							{% endfor %}
 		<div class="container mb-5">
 			<h1 class="text-center">Mon compte</h1>
 			<div class="row mt-5">
@@ -20,42 +48,33 @@
 							<h4>{{ app.user.firstName }}</p>
 						</div>
 						<div class="card-body text-center">
-							<button class="btn btn-info ">Modifier mon compte</button>
+							<a href="{{ path('editProfile') }}">
+								<button class="btn btn-info">Modifier mon compte</button>
+							</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<h4>Prochains évènements</h4>
+					<h4>Mes évènements</h4>
+					
+					{% for event in events %}
 					<div class="event-card p-2">
 						<div class="row">
 							<div class="col-md-5">
-								<img src="{{ asset('img/banner/hero-banner.png') }}" class="img-fluid w-100" alt="">
+								<a href="{{ path('my_events_business',{'slug':event.slug}) }}"><img src="{{ asset('img/banner/hero-banner.png') }}" class="img-fluid w-100" alt=""></a>
 							</div>
 							<div class="col-md-7">
-								<span class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim minima repellat recusandae ad possimus in quam eius ipsam sit quaerat omnis</sapn>
+								<span class="text-left">{{ event.shortDesc|slice(0, 130) }}...<a href="{{ path('my_events_business',{'slug':event.slug}) }}" class="btn btn-link">Voir l'evènement</a></sapn>
 							</div>
 						</div>
 					</div>
-					<div class="event-card p-2">
-						<div class="row">
-							<div class="col-md-5">
-								<img src="{{ asset('img/banner/hero-banner.png') }}" class="img-fluid w-100" alt="">
-							</div>
-							<div class="col-md-7">
-								<span class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim minima repellat recusandae ad possimus in quam eius ipsam sit quaerat omnis</sapn>
-							</div>
-						</div>
+					{% endfor %}
+					{% if is_granted('ROLE_BUSINESS') == true %}
+						<div class="d-flex justify-content-between flex-wrap">
+						<a href="{{ path('my_events') }}"><button class="button button-header">Voir tous mes évènements</button></a>
+						<a href="{{ path('events_business_new') }}"><button class="button button-header">Ajouter un évènement</button></a>
 					</div>
-                    <div class="event-card p-2">
-						<div class="row">
-							<div class="col-md-5">
-								<img src="{{ asset('img/banner/hero-banner.png') }}" class="img-fluid w-100" alt="">
-							</div>
-							<div class="col-md-7">
-								<span class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim minima repellat recusandae ad possimus in quam eius ipsam sit quaerat omnis</sapn>
-							</div>
-						</div>
-					</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>

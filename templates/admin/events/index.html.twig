@@ -1,0 +1,64 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Evènements
+{% endblock %}
+
+{% block css %}
+<link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+	<div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Evènements</h6>
+            <a href="{{ path('events_new') }}" class="btn btn-info">Créer un Evènement</a>
+		</div>
+		<div class="card-body">
+		{% dump(events) %}
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Evènement</th>
+							<th>Catégorie</th>
+							<th>Date de lancement</th>
+							<th>Date de fin</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for event in events %}
+						<tr>
+							<td>{{ event.name }}</td>
+							<td>{{ event.category.categoryName }}</td>
+							<td>{{ event.launchDate|date('d/m/y') }}</td>
+							<td>{{ event.stopDate|date('d/m/y') }}</td>
+							<td>
+								<a href="{{ path('events_show', {'id':event.id}) }}">
+								<button class="btn btn-info"><i class="fa fa-eye"></i></button>
+								</a>
+								<a href="{{ path('events_edit', {'id':event.id}) }}">
+									<button class="btn btn-warning"><i class="fa fa-edit"></i></button>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script src="{{ asset('admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    
+    <script>
+    // Call the dataTables jQuery plugin
+$(document).ready(function() {
+  $('#dataTable').DataTable();
+});
+
+    </script>
+{% endblock %}

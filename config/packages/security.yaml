@@ -36,3 +36,5 @@ security:
     access_control:
          - { path: ^/administration, roles: ROLE_ADMIN }
          - { path: ^/mon-compte, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/mon-compte/modification, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/mes-evenements, roles: ROLE_BUSINESS }
