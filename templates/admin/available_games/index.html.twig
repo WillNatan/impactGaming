@@ -1,0 +1,37 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}AvailableGames index{% endblock %}
+
+{% block body %}
+    <h1>AvailableGames index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>GameName</th>
+                <th>GameUrl</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for available_game in available_games %}
+            <tr>
+                <td>{{ available_game.id }}</td>
+                <td>{{ available_game.gameName }}</td>
+                <td>{{ available_game.gameUrl }}</td>
+                <td>
+                    <a href="{{ path('available_games_show', {'id': available_game.id}) }}">show</a>
+                    <a href="{{ path('available_games_edit', {'id': available_game.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('available_games_new') }}">Create new</a>
+{% endblock %}

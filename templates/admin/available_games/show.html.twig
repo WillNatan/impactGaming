@@ -1,0 +1,30 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}AvailableGames{% endblock %}
+
+{% block body %}
+    <h1>AvailableGames</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ available_game.id }}</td>
+            </tr>
+            <tr>
+                <th>GameName</th>
+                <td>{{ available_game.gameName }}</td>
+            </tr>
+            <tr>
+                <th>GameUrl</th>
+                <td>{{ available_game.gameUrl }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('available_games_index') }}">back to list</a>
+
+    <a href="{{ path('available_games_edit', {'id': available_game.id}) }}">edit</a>
+
+    {{ include('available_games/_delete_form.html.twig') }}
+{% endblock %}
