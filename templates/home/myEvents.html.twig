@@ -67,15 +67,11 @@
 					</div>
 					<div class="col-md-1">
 						<div class="event-links d-flex justify-content-md-center align-items-md-end flex-md-column">
-							<a href="">
-								<i class="fab fa-facebook-f fa-2x"></i>
-							</a>
-							<a href="">
-								<i class="fab fa-instagram fa-2x"></i>
-							</a>
-							<a href="">
-								<i class="fab fa-twitter fa-2x"></i>
-							</a>
+							{% for socialLink in event.socialLinks %}
+						<a href="{{ socialLink.url }}" class="d-flex align-items-center justify-content-center">
+							<i class="fab {{ socialLink.class }} fa-2x"></i>
+						</a>
+						{% endfor %}
 						</div>
 					</div>
 				</div>
