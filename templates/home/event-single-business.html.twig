@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section class="hero-banner">
+<section class="hero-banner p-2">
 		<div class="container text-center">
 			<span class="hero-banner-icon">
 				<i class="fa fa-gamepad"></i>
@@ -17,10 +17,10 @@
 			 	<a href="{{ path('my_events') }}"><button class="button button-header">Mes evènements</button></a>
                 <a href="{{ path('my_events_business_edit', {'slug':event.slug}) }}"><button class="button button-header">Modifier mon évènement</button></a>
              </div>
-		<div class="row">
+		<div class="row mt-5">
 			<div class="col-md-6 text-center text-md-left">
            
-				<h1>Description</h1>
+				<h2>Description</h2>
 				<p>{{ event.shortDesc }}</p>
 			</div>
 			<div class="col-md-6 justify-content-center">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="row mt-5">
-			<div class="col-md-4 mb-3 text-center text-md-left">
+			<div class="col-md-4 mb-3 text-center text-md-left general-infos">
 				<h2>Informations générales</h2>
                 <span class="mt-3">Date de début: {{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}</span>
                 <hr>

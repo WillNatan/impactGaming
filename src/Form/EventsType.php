@@ -31,6 +31,8 @@ class EventsType extends AbstractType
             ->add('price', IntegerType::class, ['label'=>"Prix",'attr'=>['class'=>'form-control','step'=>'0.01','min'=>'0.00', 'max'=>'10000.00']])
             ->add('availableGames', EntityType::class,['label'=>"Jeux disponibles",'class'=>AvailableGames::class, 'choice_label'=>'gameName','multiple'=>true,'attr'=>['class'=>'form-control']])
             ->add('category', EntityType::class, ['label'=>"Catégorie",'attr'=>['class'=>'form-control'],'class'=>EventCategory::class, 'choice_label'=>'categoryName'])
+            ->add('fbUrl', TextType::class, ['mapped'=>false, 'attr'=>['class'=>'form-control ml-3 fbInput', 'disabled'=>'true','placeholder'=>"Entrez votre lien ici"]])
+            ->add('twUrl', TextType::class, ['mapped'=>false, 'attr'=>['class'=>'form-control ml-3 twInput', 'disabled'=>'true','placeholder'=>"Entrez votre lien ici"]])
         ;
     }
 

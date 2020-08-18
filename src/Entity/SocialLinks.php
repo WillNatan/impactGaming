@@ -35,14 +35,10 @@ class SocialLinks
     private $class;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Events::class, mappedBy="socialLinks")
+     * @ORM\ManyToOne(targetEntity=Events::class, inversedBy="socialLinks")
      */
-    private $events;
+    private $event;
 
-    public function __construct()
-    {
-        $this->events = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -85,30 +81,14 @@ class SocialLinks
         return $this;
     }
 
-    /**
-     * @return Collection|Events[]
-     */
-    public function getEvents(): Collection
+    public function getEvent(): ?Events
     {
-        return $this->events;
+        return $this->event;
     }
 
-    public function addEvent(Events $event): self
+    public function setEvent(?Events $event): self
     {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->addSocialLink($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Events $event): self
-    {
-        if ($this->events->contains($event)) {
-            $this->events->removeElement($event);
-            $event->removeSocialLink($this);
-        }
+        $this->event = $event;
 
         return $this;
     }

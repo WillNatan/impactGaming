@@ -2,16 +2,6 @@
 
 {% block body %}
 	{{ form_start(form) }}
-	<section class="hero-banner">
-		<div class="container text-center">
-			<span class="hero-banner-icon">
-				<i class="fa fa-gamepad"></i>
-			</span>
-			<p>{{ form_label(form.name) }}</p>
-			<h1>{{ form_widget(form.name) }}</h1>
-
-		</div>
-	</section>
 	<section class="container pt-5 pb-5">
 		<div class="text-center mb-5">
 			<h1 class="text-center">Création d'un évènement</h1>
@@ -23,9 +13,11 @@
 			</a>
 		</div>
 		<div class="row">
+			<div class="col-md-12 text-center text-md-left">
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name) }}
+			</div>
 			<div class="col-md-6 text-center text-md-left">
-
-
 				{{ form_label(form.shortDesc) }}
 				{{ form_widget(form.shortDesc) }}
 			</div>
@@ -85,12 +77,14 @@
 				    {{ form_widget(form.longDesc) }}
                 </div>
                 <div class="form-group d-flex justify-content-between align-items-center">
-                    <button class="button button-header"><i class="fab fa-facebook-f"></i></button>
-                    <input type="text" class="form-control ml-3" placeholder="Entrez votre lien ici">
+                    <button class="button button-header fb-button" type="button"><i class="fab fa-facebook-f"></i></button>
+					<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
+                    {{ form_widget(form.fbUrl) }}
                 </div>
                 <div class="form-group d-flex justify-content-between align-items-center">
-                    <button class="button button-header"><i class="fab fa-twitter"></i></button>
-                    <input type="text" class="form-control ml-3" placeholder="Entrez votre lien ici">
+                    <button class="button button-header tw-button" type="button"><i class="fab fa-twitter"></i></button>
+					<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
+                    {{ form_widget(form.twUrl) }}
                 </div>
 			</div>
 		</div>
@@ -99,4 +93,32 @@
 		</div>
 	</section>
 	{{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		document.querySelector('.fb-button').addEventListener("click", toggleFbInput);
+		document.querySelector('.tw-button').addEventListener("click", toggleTwInput);
+
+		function toggleFbInput(){
+			if(document.querySelector('.fbInput').disabled == true){
+				document.querySelector('.fbInput').disabled = false;
+				document.querySelector('.checked-button-fb').classList.remove('d-none')
+			}else{
+				document.querySelector('.fbInput').disabled = true;
+				document.querySelector('.checked-button-fb').classList.add('d-none')
+				document.querySelector('.fbInput').value = '';
+			}
+		}
+		function toggleTwInput(){
+			if(document.querySelector('.twInput').disabled == true){
+				document.querySelector('.twInput').disabled = false;
+				document.querySelector('.checked-button-tw').classList.remove('d-none')
+			}else{
+				document.querySelector('.twInput').disabled = true;
+				document.querySelector('.checked-button-tw').classList.add('d-none')
+				document.querySelector('.twInput').value = '';
+			}
+		}
+	</script>
 {% endblock %}

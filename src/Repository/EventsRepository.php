@@ -23,6 +23,19 @@ class EventsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e')
+            ->orderBy('e.launchDate', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByUser($user)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->where('e.user = :user')
+            ->setParameter('user',$user)
+            ->orderBy('e.launchDate', 'ASC')
             ->getQuery()
             ->getResult()
         ;

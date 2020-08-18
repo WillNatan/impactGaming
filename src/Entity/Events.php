@@ -61,11 +61,6 @@ class Events
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity=SocialLinks::class, inversedBy="events")
-     */
-    private $socialLinks;
-
-    /**
      * @ORM\ManyToMany(targetEntity=AvailableGames::class, inversedBy="events")
      */
     private $availableGames;
@@ -100,11 +95,16 @@ class Events
      */
     private $ticketNumber;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SocialLinks::class, mappedBy="event")
+     */
+    private $socialLinks;
+
     public function __construct()
     {
-        $this->socialLinks = new ArrayCollection();
         $this->availableGames = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->socialLinks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,32 +204,6 @@ class Events
     public function setPrice(?float $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SocialLinks[]
-     */
-    public function getSocialLinks(): Collection
-    {
-        return $this->socialLinks;
-    }
-
-    public function addSocialLink(SocialLinks $socialLink): self
-    {
-        if (!$this->socialLinks->contains($socialLink)) {
-            $this->socialLinks[] = $socialLink;
-        }
-
-        return $this;
-    }
-
-    public function removeSocialLink(SocialLinks $socialLink): self
-    {
-        if ($this->socialLinks->contains($socialLink)) {
-            $this->socialLinks->removeElement($socialLink);
-        }
 
         return $this;
     }
@@ -347,6 +321,37 @@ class Events
     public function setTicketNumber(int $ticketNumber): self
     {
         $this->ticketNumber = $ticketNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SocialLinks[]
+     */
+    public function getSocialLinks(): Collection
+    {
+        return $this->socialLinks;
+    }
+
+    public function addSocialLink(SocialLinks $socialLink): self
+    {
+        if (!$this->socialLinks->contains($socialLink)) {
+            $this->socialLinks[] = $socialLink;
+            $socialLink->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialLink(SocialLinks $socialLink): self
+    {
+        if ($this->socialLinks->contains($socialLink)) {
+            $this->socialLinks->removeElement($socialLink);
+            // set the owning side to null (unless already changed)
+            if ($socialLink->getEvent() === $this) {
+                $socialLink->setEvent(null);
+            }
+        }
 
         return $this;
     }

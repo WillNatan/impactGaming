@@ -1,3 +1,7 @@
+*{
+  overflow-wrap: break-word!important;
+}
+
 .event-list {
   margin: 50px 0;
 }
@@ -88,4 +92,18 @@
 .event-list .event-card .event-links a:hover {
   color: #292929;
   background-color: #b9b9b9;
+}
+
+.general-infos{
+  background-color: #FBF8FF;
+  padding:15px;
+}
+
+.general-infos hr{
+  border: 0;
+  clear:both;
+  display:block;
+  width:100%;               
+  background-color:rgb(211, 211, 211);
+  height: 1px;
 }

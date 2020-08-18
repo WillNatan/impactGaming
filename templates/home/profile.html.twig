@@ -64,7 +64,7 @@
 								<a href="{{ path('my_events_business',{'slug':event.slug}) }}"><img src="{{ asset('img/banner/hero-banner.png') }}" class="img-fluid w-100" alt=""></a>
 							</div>
 							<div class="col-md-7">
-								<span class="text-left">{{ event.shortDesc|slice(0, 130) }}...<a href="{{ path('my_events_business',{'slug':event.slug}) }}" class="btn btn-link">Voir l'evènement</a></sapn>
+								<p>{{ event.shortDesc|slice(0, 130) }}...</p>
 							</div>
 						</div>
 					</div>

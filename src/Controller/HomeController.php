@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Events;
+use App\Entity\SocialLinks;
 use App\Form\EventsType;
 use App\Form\EditUserType;
 use App\Repository\EventsRepository;
@@ -39,6 +40,25 @@ class HomeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $replaceSpace = str_replace(" ", "-", $event->getName());
             $replaceComma = str_replace(',', '', $replaceSpace);
+            if(!is_null($form->get('fbUrl')->getData()))
+            {
+                $ss = new SocialLinks();
+                $ss->setUrl($form->get('fbUrl')->getData())
+                   ->setEvent($event)
+                   ->setType('facebook')
+                   ->setClass('fa-facebook-f');
+                   $entityManager->persist($ss);
+            }
+            if(!is_null($form->get('twUrl')->getData()))
+            {
+                $ss = new SocialLinks();
+                $ss->setUrl($form->get('twUrl')->getData())
+                   ->setEvent($event)
+                   ->setType('twitter')
+                   ->setClass('fa-twitter');
+                   $entityManager->persist($ss);
+            }
+            
             $event->setSlug($replaceComma);
             $event->setUser($this->getUser());
             
@@ -60,7 +80,7 @@ class HomeController extends AbstractController
     public function myEvents(EventsRepository $eventsRepository, PaginatorInterface $paginator, Request $request)
     {
         $pagination = $paginator->paginate(
-            $eventsRepository->findBy(['user' => $this->getUser()]), /* query NOT result */
+            $eventsRepository->findByUser($this->getUser()), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
         );
@@ -88,6 +108,22 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach($event->getSocialLinks() as $links){
+                if(!is_null($form->get('fbUrl')->getData())){
+                    if($links->getUrl() != $form->get('fbUrl')->getData()){
+                        if($links->getType() == 'facebook'){
+                            $links->setUrl($form->get('fbUrl')->getData());
+                        }
+                    }
+                }
+                if(!is_null($form->get('twUrl')->getData())){
+                    if($links->getUrl() != $form->get('twUrl')->getData()){
+                        if($links->getType() == 'twitter'){
+                            $links->setUrl($form->get('twUrl')->getData());
+                        }
+                    }
+                }
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('my_events_business', ['slug' => $event->getSlug()]);
@@ -105,7 +141,7 @@ class HomeController extends AbstractController
     public function profile(EventsRepository $eventsRepository, PaginatorInterface $paginator, Request $request)
     {
         $pagination = $paginator->paginate(
-            $eventsRepository->findBy(['user' => $this->getUser()]), /* query NOT result */
+            $eventsRepository->findByUser($this->getUser()), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             3 /*limit per page*/
         );
