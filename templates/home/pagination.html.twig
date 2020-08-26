@@ -18,7 +18,7 @@
 #}
 
 {% if pageCount > 1 %}
-	<div class="btn-toolbar justify-content-center mt-3 mb-3" role="toolbar" aria-label="Toolbar with button groups">
+	<div class="btn-toolbar justify-content-center mt-3 pb-3" role="toolbar" aria-label="Toolbar with button groups">
 		<div class="btn-group mr-2 flex-wrap justify-content-center" role="group" aria-label="First group">
 			{% if previous is defined %}
 				<a rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="btn btn-secondary">

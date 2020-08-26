@@ -2,9 +2,7 @@
   overflow-wrap: break-word!important;
 }
 
-.event-list {
-  margin: 50px 0;
-}
+
 
 .event-list .event-card {
   position: relative;
@@ -15,7 +13,8 @@
 }
 
 .event-list .event-card .event-date {
-  background-color: rgb(247, 74, 74);
+  background: #b6454e;  /* fallback for old browsers */
+
   text-align: center;
   display: flex;
   justify-content: center;
@@ -106,4 +105,14 @@
   width:100%;               
   background-color:rgb(211, 211, 211);
   height: 1px;
+}
+
+.custom-bg{
+  background: #f7f7f7!important;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #f7f7f7, #ffffff)!important;  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #f7f7f7, #ffffff)!important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.ad-banner + .ad-banner{
+  margin-top:15px;
 }

@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Events;
-use App\Entity\SocialLinks;
 use App\Form\EventsType;
 use App\Form\EditUserType;
+use App\Entity\SocialLinks;
 use App\Repository\EventsRepository;
+use App\Repository\SocialLinksRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -22,9 +24,9 @@ class HomeController extends AbstractController
     /**
      * @Route("", name="home")
      */
-    public function index()
+    public function index(EventsRepository $eventsRepository)
     {
-        return $this->render('home/index.html.twig');
+        return $this->render('home/index.html.twig', ['lastEvent' => $eventsRepository->findOneBy([], ['id' => 'DESC'])]);
     }
 
     /**
@@ -40,30 +42,28 @@ class HomeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $replaceSpace = str_replace(" ", "-", $event->getName());
             $replaceComma = str_replace(',', '', $replaceSpace);
-            if(!is_null($form->get('fbUrl')->getData()))
-            {
+            if (!is_null($form->get('fbUrl')->getData())) {
                 $ss = new SocialLinks();
                 $ss->setUrl($form->get('fbUrl')->getData())
-                   ->setEvent($event)
-                   ->setType('facebook')
-                   ->setClass('fa-facebook-f');
-                   $entityManager->persist($ss);
+                    ->setEvent($event)
+                    ->setType('facebook')
+                    ->setClass('fa-facebook-f');
+                $entityManager->persist($ss);
             }
-            if(!is_null($form->get('twUrl')->getData()))
-            {
+            if (!is_null($form->get('twUrl')->getData())) {
                 $ss = new SocialLinks();
                 $ss->setUrl($form->get('twUrl')->getData())
-                   ->setEvent($event)
-                   ->setType('twitter')
-                   ->setClass('fa-twitter');
-                   $entityManager->persist($ss);
+                    ->setEvent($event)
+                    ->setType('twitter')
+                    ->setClass('fa-twitter');
+                $entityManager->persist($ss);
             }
-            
+
             $event->setSlug($replaceComma);
             $event->setUser($this->getUser());
-            
+
             $entityManager->persist($event);
-            
+
             $entityManager->flush();
             return $this->redirectToRoute('my_events');
         }
@@ -95,34 +95,74 @@ class HomeController extends AbstractController
     public function myEventsBusiness(Events $event)
     {
         return $this->render('home/event-single-business.html.twig', [
-            'event' => $event,
+            'event' => $event
         ]);
     }
 
     /**
      * @Route("mes-evenements/modification/{slug}", name="my_events_business_edit", methods={"GET","POST"})
      */
-    public function myEventsBusinessEdit(Events $event, Request $request)
+    public function myEventsBusinessEdit(Events $event, Request $request, SocialLinksRepository $socialLinksRepository)
     {
+        $currentEventName = $event->getName();
         $form = $this->createForm(EventsType::class, $event);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach($event->getSocialLinks() as $links){
-                if(!is_null($form->get('fbUrl')->getData())){
-                    if($links->getUrl() != $form->get('fbUrl')->getData()){
-                        if($links->getType() == 'facebook'){
-                            $links->setUrl($form->get('fbUrl')->getData());
+            if (count($event->getSocialLinks()) == 0) {
+                if (!is_null($form->get('fbUrl')->getData())) {
+                    $newLink = new SocialLinks();
+                    $newLink->setType('facebook')
+                        ->setClass('fa-facebook-f')
+                        ->setUrl($form->get('fbUrl')->getData());
+                    $this->getDoctrine()->getManager()->persist($newLink);
+                    $event->addSocialLink($newLink);
+                }
+
+                if (!is_null($form->get('twUrl')->getData())) {
+                    $newLink = new SocialLinks();
+                    $newLink->setType('twitter')
+                        ->setClass('fa-twitter')
+                        ->setUrl($form->get('twUrl')->getData());
+                    $this->getDoctrine()->getManager()->persist($newLink);
+                    $event->addSocialLink($newLink);
+                }
+            } else if (count($event->getSocialLinks()) == 1) {
+                foreach ($event->getSocialLinks() as $link) {
+                    if ($link->getType() == 'facebook' && !is_null($form->get('twUrl')->getData())) {
+                        $newLink = new SocialLinks();
+                        $newLink->setType('twitter')
+                            ->setClass('fa-twitter')
+                            ->setUrl($form->get('twUrl')->getData());
+                        $this->getDoctrine()->getManager()->persist($newLink);
+                        $event->addSocialLink($newLink);
+                    } else if ($link->getType() == 'twitter' && !is_null($form->get('fbUrl')->getData())) {
+                        $newLink = new SocialLinks();
+                        $newLink->setType('facebook')
+                            ->setClass('fa-facebook-f')
+                            ->setUrl($form->get('fbUrl')->getData());
+                        $this->getDoctrine()->getManager()->persist($newLink);
+                        $event->addSocialLink($newLink);
+                    }
+                }
+            } else {
+                foreach ($event->getSocialLinks() as $link) {
+
+                    if ($link->getType() == 'facebook') {
+                        if (!is_null($form->get('fbUrl')->getData()) && $link->getUrl() != $form->get('fbUrl')->getData()) {
+                            $link->setUrl($form->get('fbUrl')->getData());
+                        }
+                    } else if ($link->getType() == 'twitter') {
+                        if (!is_null($form->get('twUrl')->getData()) && $link->getUrl() != $form->get('twUrl')->getData()) {
+                            $link->setUrl($form->get('twUrl')->getData());
                         }
                     }
                 }
-                if(!is_null($form->get('twUrl')->getData())){
-                    if($links->getUrl() != $form->get('twUrl')->getData()){
-                        if($links->getType() == 'twitter'){
-                            $links->setUrl($form->get('twUrl')->getData());
-                        }
-                    }
-                }
+            }
+            if ($event->getName() != $currentEventName) {
+                $replaceSpace = str_replace(" ", "-", $event->getName());
+                $replaceComma = str_replace(',', '', $replaceSpace);
+                $event->setSlug($replaceComma);
             }
             $this->getDoctrine()->getManager()->flush();
 

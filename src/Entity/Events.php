@@ -35,12 +35,12 @@ class Events
     private $place;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $launchDate;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $stopDate;
 
@@ -96,7 +96,7 @@ class Events
     private $ticketNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=SocialLinks::class, mappedBy="event")
+     * @ORM\OneToMany(targetEntity=SocialLinks::class, mappedBy="event", cascade="remove")
      */
     private $socialLinks;
 

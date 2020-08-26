@@ -1,0 +1,5 @@
+<form method="delete" action="{{ path('link_delete', {'socialid': socialLink.id}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer ce lien ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ socialLink.id) }}">
+    <button class="btn btn-danger ml-1"><i class="fa fa-trash"></i></button>
+</form>

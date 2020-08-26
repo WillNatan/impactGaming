@@ -35,7 +35,7 @@ class SocialLinks
     private $class;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Events::class, inversedBy="socialLinks")
+     * @ORM\ManyToOne(targetEntity=Events::class, inversedBy="socialLinks", cascade="remove")
      */
     private $event;
 

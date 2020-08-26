@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Events;
+use App\Repository\EventsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,10 +15,11 @@ class AdminController extends AbstractController
     /**
      * @Route("", name="admin_home")
      */
-    public function index()
+    public function index(EventsRepository $events)
     {
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+            'eventCount'=>count($events->findAll()),
+            'lastEvent'=>$events->findOneBy([],['id'=>'DESC'])
+            ]);
     }
 }

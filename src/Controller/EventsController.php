@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Events;
+use App\Entity\SocialLinks;
 use App\Form\EventsType;
 use App\Repository\EventsRepository;
+use App\Repository\SocialLinksRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,6 +39,7 @@ class EventsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();
@@ -63,10 +68,65 @@ class EventsController extends AbstractController
      */
     public function edit(Request $request, Events $event): Response
     {
+
+
         $form = $this->createForm(EventsType::class, $event);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if (count($event->getSocialLinks()) == 0) {
+                if (!is_null($form->get('fbUrl')->getData())) {
+                    $newLink = new SocialLinks();
+                    $newLink->setType('facebook')
+                        ->setClass('fa-facebook-f')
+                        ->setUrl($form->get('fbUrl')->getData());
+                    $this->getDoctrine()->getManager()->persist($newLink);
+                    $event->addSocialLink($newLink);
+                }
+
+                if (!is_null($form->get('twUrl')->getData())) {
+                    $newLink = new SocialLinks();
+                    $newLink->setType('twitter')
+                        ->setClass('fa-twitter')
+                        ->setUrl($form->get('twUrl')->getData());
+                    $this->getDoctrine()->getManager()->persist($newLink);
+                    $event->addSocialLink($newLink);
+                }
+            } else if (count($event->getSocialLinks()) == 1) {
+                foreach ($event->getSocialLinks() as $link) {
+                    if ($link->getType() == 'facebook' && !is_null($form->get('twUrl')->getData())) {
+                        $newLink = new SocialLinks();
+                        $newLink->setType('twitter')
+                            ->setClass('fa-twitter')
+                            ->setUrl($form->get('twUrl')->getData());
+                        $this->getDoctrine()->getManager()->persist($newLink);
+                        $event->addSocialLink($newLink);
+                    } else if ($link->getType() == 'twitter' && !is_null($form->get('fbUrl')->getData())) {
+                        $newLink = new SocialLinks();
+                        $newLink->setType('facebook')
+                            ->setClass('fa-facebook-f')
+                            ->setUrl($form->get('fbUrl')->getData());
+                        $this->getDoctrine()->getManager()->persist($newLink);
+                        $event->addSocialLink($newLink);
+                    }
+                }
+            } else {
+                foreach ($event->getSocialLinks() as $link) {
+
+                    if ($link->getType() == 'facebook') {
+                        if (!is_null($form->get('fbUrl')->getData()) && $link->getUrl() != $form->get('fbUrl')->getData()) {
+                            $link->setUrl($form->get('fbUrl')->getData());
+                        }
+                    } else if ($link->getType() == 'twitter') {
+                        if (!is_null($form->get('twUrl')->getData()) && $link->getUrl() != $form->get('twUrl')->getData()) {
+                            $link->setUrl($form->get('twUrl')->getData());
+                        }
+                    }
+                }
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('events_index');
@@ -83,12 +143,26 @@ class EventsController extends AbstractController
      */
     public function delete(Request $request, Events $event): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($event);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('events_index');
+    }
+
+    /**
+     * @Route("/deletelink/{socialid}", name="slink_delete", methods={"DELETE"})
+     */
+    public function deleteLink(Request $request, $socialid, SocialLinksRepository $socialLinksRepository)
+    {
+        $link = $socialLinksRepository->find($socialid);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($link);
+        $entityManager->flush();
+
+
+        return new JsonResponse();
     }
 }

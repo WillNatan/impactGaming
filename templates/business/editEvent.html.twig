@@ -80,28 +80,79 @@
 					{{ form_label(form.longDesc) }}
 					{{ form_widget(form.longDesc) }}
 				</div>
+				{% dump event.socialLinks|length %}
 
-
-				{% for socialLink in event.socialLinks %}
-					{% if socialLink.type == "facebook" %}
-						<div class="form-group d-flex justify-content-between align-items-center">
+				{% if event.socialLinks|length == 0 %}
+					<div class="form-group d-flex justify-content-between align-items-center">
 						<button class="button button-header fb-button" type="button">
-							<i class="fab {{ socialLink.class }}"></i>
+							<i class="fab fa-facebook-f"></i>
 						</button>
 						<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
-						{{ form_widget(form.fbUrl, {'attr':{'value':socialLink.url}}) }}
+						{{ form_widget(form.fbUrl) }}
 					</div>
-					{% else %}
-						<div class="form-group d-flex justify-content-between align-items-center">
+					<div class="form-group d-flex justify-content-between align-items-center">
 						<button class="button button-header tw-button" type="button">
-							<i class="fab {{ socialLink.class }}"></i>
+							<i class="fab fa-twitter"></i>
 						</button>
 						<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
-						{{ form_widget(form.twUrl, {'attr':{'value':socialLink.url}}) }}
+						{{ form_widget(form.twUrl) }}
 					</div>
-					{% endif %}
-					
-				{% endfor %}
+				{% elseif event.socialLinks|length == 1 %}
+					{% for socialLink in event.socialLinks %}
+						{% if socialLink.type == "facebook" %}
+							<div class="form-group d-flex justify-content-between align-items-center">
+								<button class="button button-header fb-button" type="button">
+									<i class="fab {{ socialLink.class }}"></i>
+								</button>
+								<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
+								{{ form_widget(form.fbUrl, {'attr':{'value':socialLink.url}}) }}
+							</div>
+							<div class="form-group d-flex justify-content-between align-items-center">
+								<button class="button button-header tw-button" type="button">
+									<i class="fab fa-twitter"></i>
+								</button>
+								<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
+								{{ form_widget(form.twUrl) }}
+							</div>
+						{% elseif socialLink.type == "twitter" %}
+							<div class="form-group d-flex justify-content-between align-items-center">
+								<button class="button button-header fb-button" type="button">
+									<i class="fab fa-facebook-f"></i>
+								</button>
+								<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
+								{{ form_widget(form.fbUrl) }}
+							</div>
+							<div class="form-group d-flex justify-content-between align-items-center">
+								<button class="button button-header tw-button" type="button">
+									<i class="fab {{ socialLink.class }}"></i>
+								</button>
+								<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
+								{{ form_widget(form.twUrl, {'attr':{'value':socialLink.url}}) }}
+							</div>
+						{% endif %}
+					{% endfor %}
+					{% elseif event.socialLinks|length > 1 %}
+					{% for socialLink in event.socialLinks %}
+						{% if socialLink.type == "facebook" %}
+							<div class="form-group d-flex justify-content-between align-items-center">
+								<button class="button button-header fb-button" type="button">
+									<i class="fab {{ socialLink.class }}"></i>
+								</button>
+								<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
+								{{ form_widget(form.fbUrl, {'attr':{'value':socialLink.url}}) }}
+							</div>
+						{% elseif socialLink.type == "twitter" %}
+							<div class="form-group d-flex justify-content-between align-items-center">
+								<button class="button button-header tw-button" type="button">
+									<i class="fab {{ socialLink.class }}"></i>
+								</button>
+								<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
+								{{ form_widget(form.twUrl, {'attr':{'value':socialLink.url}}) }}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+
 
 			</div>
 		</div>
@@ -114,11 +165,11 @@
 
 {% block javascripts %}
 	<script>
-	const defaultValueFb = document.querySelector('.fbInput').value;
-	
-	const defaultValueTw = document.querySelector('.twInput').value;
-	
-		document.querySelector('.fb-button').addEventListener("click", toggleFbInput);
+		const defaultValueFb = document.querySelector('.fbInput').value;
+
+const defaultValueTw = document.querySelector('.twInput').value;
+
+document.querySelector('.fb-button').addEventListener("click", toggleFbInput);
 document.querySelector('.tw-button').addEventListener("click", toggleTwInput);
 
 function toggleFbInput() {

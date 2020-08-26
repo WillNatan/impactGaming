@@ -1,58 +1,79 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}{{ event.name }}
+{% block title %}
+	{{ event.name }}
 {% endblock %}
 
 {% block body %}
 	<div class="card shadow mb-4">
-		<div class="card-header py-3 d-flex justify-content-between">
+		<div class="card-header py-3">
 			<h6 class="m-0 font-weight-bold text-primary">{{ event.name }}</h6>
 
 		</div>
 		<div class="card-body">
-			<div class="table-responsive">
-                <table class="table">
-				<tbody>
-					<tr>
-						<th>Evènement</th>
-						<td>{{ event.name }}</td>
-					</tr>
-					<tr>
-						<th>Lien de site web</th>
-						<td><a href="{{ event.websiteLink }}">{{ event.websiteLink }}</a></td>
-					</tr>
-					<tr>
-						<th>Lieu</th>
-						<td>{{ event.place }}</td>
-					</tr>
-					<tr>
-						<th>Date de lancement</th>
-						<td>{{ event.launchDate ? event.launchDate|date('d/m/Y') : '' }}</td>
-					</tr>
-					<tr>
-						<th>Date de fin</th>
-						<td>{{ event.stopDate ? event.stopDate|date('d/m/Y') : '' }}</td>
-					</tr>
-					<tr>
-						<th>Description</th>
-						<td>{{ event.description }}</td>
-					</tr>
-					<tr>
-						<th>Prix du ticket</th>
-						<td>{{ event.price }}</td>
-					</tr>
-				</tbody>
-			</table>
-            </div>
-			<div class="d-flex flex-wrap">
-				<a href="{{ path('events_index') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i></a>
+			<div class="row">
+				<div class="col-md-3">
+					<h4>Evènement</h4>
+					<span>{{ event.name }}</span>
+					<hr>
+					<h4>Lien de site web</h4>
+					<span>
+						<a href="{{ event.websiteLink }}">{{ event.websiteLink }}</a>
+					</span>
+					<hr>
+					<h4>Lieu</h4>
+					<span>{{ event.place }}</span>
+					<hr>
+					<h4>Date de lancement</h4>
+					<span>{{ event.launchDate ? event.launchDate|date('d/m/Y') : '' }}</span>
+					<hr>
+					<h4>Date de fin</h4>
+					<span>{{ event.stopDate ? event.stopDate|date('d/m/Y') : '' }}</span>
+					<hr>
+					<h4>Prix du ticket</h4>
+					<span>{{ event.price != 0 ? event.price~" €" : "Gratuit" }}</span>
+					<hr>
+				</div>
+				<div class="col-md-9">
+					<h4>Description courte</h4>
+					<span>{{ event.shortDesc }}</span>
+					<hr>
+					<h4>Description longue</h4>
+					<span>{{ event.longDesc }}</span>
+					<hr>
+					<h4>Capacité</h4>
+					<span>{{ event.ticketNumber != 0 ? event.ticketNumber ~ " place(s) disponible(s)" : "Illimité"}}</span>
+					<hr>
+					<h4>Liens sociaux</h4>
+					
+					{% for link in event.socialLinks %}
+					
+						{% if link.type == "facebook" %}
+							<h6>Facebook</h6>
+							<a href="{{link.url}}">{{link.url}}</a>
+						{% endif %}
+						{% if link.type == "twitter" %}
+							<h6>Twitter</h6>
+							<a href="{{link.url}}">{{link.url}}</a>
+						{% endif %}
 
-				<a href="{{ path('events_edit', {'id': event.id}) }}" class="btn btn-warning ml-1"><i class="fa fa-edit"></i></a>
-
-				{{ include('admin/events/_delete_form.html.twig') }}
+					{% endfor %}
+				</div>
 			</div>
+			<div class="d-flex flex-wrap">
+			<a href="{{ path('events_index') }}" class="btn btn-info">
+				<i class="fa fa-arrow-left"></i>
+			</a>
+
+			<a href="{{ path('events_edit', {'id': event.id}) }}" class="btn btn-warning ml-1">
+				<i class="fa fa-edit"></i>
+			</a>
+
+			{{ include('admin/events/_delete_form.html.twig') }}
 		</div>
+		</div>
+		
 	</div>
-
-
+</div>
+</div>
 {% endblock %}
