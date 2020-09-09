@@ -6,9 +6,9 @@
 			<span class="hero-banner-icon">
 				<i class="fa fa-gamepad"></i>
 			</span>
-			<p>{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}
+			<p>{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 				-
-				{{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='en') }},
+				{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }},
 				{{ event.place }}</p>
 			<h1>{{ event.name }}</h1>
 
@@ -41,9 +41,9 @@
 						</ul>
 
 						<div class="clockdiv-content text-center">
-							<p class="h4 primary-text2 mb-2">{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}
+							<p class="h4 primary-text2 mb-2">{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 								-
-								{{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='en') }}</p>
+								{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</p>
 						</div>
 					</div>
 				</div>
@@ -54,12 +54,12 @@
 				<div class="col-md-4 mb-3 text-center text-md-left general-infos">
 					<h2>Informations générales</h2>
 					<span class="mt-3" id="launchDate" data-date="{{ event.launchDate|date('Y-m-d h:i:s') }}">Date de début:
-						{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}
+						{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 						à
-						{{ event.launchDate|date('h:i') }}</span>
+						{{ event.launchDate|date('H:i') }}</span>
 					<hr/>
 					<span>Date de fin:
-						{{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='en') }}
+						{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}
 						à
 						{{ event.stopDate|date('H:i') }}</span>
 					<hr>

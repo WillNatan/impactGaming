@@ -1,156 +1,172 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section class="hero-banner">
-    <div class="container text-center">
-        <span class="hero-banner-icon"><i class="fa fa-gamepad"></i></span>
-        <p>20 - 25 Janvier 2020, Paris</p>
-        <h1>Paris Games Week 2020</h1>
-        <a class="button button-header" href="{{ path('single_event', {'slug':lastEvent.slug}) }}">Détails</a>
-    </div>
-</section>
-    <section class="section-padding--small bg-gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 align-self-center mb-5 mb-lg-0">
-                    <div class="innovative-wrapper">
-                        <h3 class="primary-text">Paris Games Week <br class="d-none d-xl-block"> 2020</h3>
-                        <p class="h4 primary-text2 mb-3">Paris</p>
-                        <p>Morning steas great earth for divide our good sixth called abunda itseld appear fisrd seaton upon above may bearing all moveth morning make subdue stars they are a goreat eart divide our good sixth one of that</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 pl-xl-5">
-
+	<section class="hero-banner">
+		<div class="container text-center">
+			<span class="hero-banner-icon">
+				<i class="fa fa-gamepad"></i>
+			</span>
+			<p>{{ lastEvent.launchDate|date('Y-m-d') }}
+				-
+				{{ lastEvent.launchDate|date('Y-m-d') }},
+				{{ lastEvent.place }}</p>
+			<h1>{{ lastEvent.name }}</h1>
+			<a class="button button-header" href="{{ path('single_event', {'slug':lastEvent.slug}) }}">Détails</a>
+		</div>
+	</section>
+	<section class="section-padding--small bg-gray">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 align-self-center mb-5 mb-lg-0">
+					<div class="innovative-wrapper">
+						<h3 class="primary-text">{{ lastEvent.name }}</h3>
+						<p class="h4 primary-text2 mb-3">{{ lastEvent.place }}</p>
+						<p>{{ lastEvent.shortDesc }}</p>
+					</div>
+				</div>
+				<div class="col-lg-6 pl-xl-5 justify-content-center align-items-center">
+                {# Si la date du jour est supérieure que la date de lancement de l'évènement et si la date du jour est inférieure à la date de fin #}
+                {% dump(lastEvent.launchDate) %}
+                {% dump(date()) %}
+                
+                {% if date().diff(lastEvent.launchDate).invert == 1 and date().diff(lastEvent.stopDate).invert == 0 %}
+                    <h2>Evènement en cours <i class="fa fa-check text-success"></i></h2>
+                    {# Si la date du jour est supérieure que la date de lancement de l'évènement et si la date du jour est supérieure à la date de fin #}
+                {% elseif date().diff(lastEvent.launchDate).invert == 1 and date().diff(lastEvent.stopDate).invert == 1 %}
+                    <h2>Evènement terminé <i class="fa fa-check text-success"></i></h2>
+                    {% else %}
                     <ul class="clockdiv text-center" id="clockdiv">
-                        <li class="clockdiv-single clockdiv-day">
-                            <h1 class="days">320</h1>
-                            <span class="smalltext">Days</span>
-                        </li>
-                        <li class="clockdiv-single clockdiv-hour">
-                            <h1 class="hours">30</h1>
-                            <span class="smalltext">Hours</span>
-                        </li>
-                        <li class="clockdiv-single clockdiv-minute">
-                            <h1 class="minutes">30</h1>
-                            <span class="smalltext">Mins</span>
-                        </li>
-                    </ul>
+							<li class="clockdiv-single clockdiv-day">
+								<h1 class="days"></h1>
+								<span class="smalltext">Jours</span>
+							</li>
+							<li class="clockdiv-single clockdiv-hour">
+								<h1 class="hours"></h1>
+								<span class="smalltext">Heures</span>
+							</li>
+							<li class="clockdiv-single clockdiv-minute">
+								<h1 class="minutes"></h1>
+								<span class="smalltext">Minutes</span>
+							</li>
+						</ul>
+						<div class="clockdiv-content text-center">
+							<p class="h4 primary-text2 mb-2" id="launchDate" data-date="{{ lastEvent.launchDate|date('Y-m-d h:i:s') }}">{{ lastEvent.launchDate|date('Y-m-d') }}
+								-
+								{{ lastEvent.stopDate|date('Y-m-d') }}</p>
+							<a class="button button-link" href="{{ path('single_event', {'slug':lastEvent.slug}) }}">Détails</a>
+						</div>
+                {% endif %}
+					
 
-                    <div class="clockdiv-content text-center">
-                        <p class="h4 primary-text2 mb-2">20 - 25 Janvier 2020</p>
-                        <a class="button button-link" href="#">Détails</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <section class="section-margin">
-        <div class="container">
-            <div class="section-intro text-center pb-98px">
-                <p class="section-intro__title">Rejoindre ImpactGaming</p>
-                <h2 class="primary-text">Pourquoi nous rejoindre</h2>
-                <img src="img/home/section-style.png" alt="">
-            </div>
-
-
-            <div class="d-lg-flex justify-content-between">
-                <div class="card-feature mb-5 mb-lg-0">
-                    <div class="feature-icon">
-                        <i class="flaticon-prize"></i>
-                    </div>
-                    <h3>Always First Service</h3>
-                    <p>His likeness beast moved domini moved above meat all fly blessed greater creepeth you itself living room </p>
-                </div>
-
-                <div class="card-feature mb-5 mb-lg-0">
-                    <div class="feature-icon">
-                        <i class="flaticon-earth-globe"></i>
-                    </div>
-                    <h3>International Business</h3>
-                    <p>His likeness beast moved domini moved above meat all fly blessed greater creepeth you itself living room </p>
-                </div>
-
-                <div class="card-feature mb-5 mb-lg-0">
-                    <div class="feature-icon">
-                        <i class="flaticon-sing"></i>
-                    </div>
-                    <h3>World Great Speaker</h3>
-                    <p>His likeness beast moved domini moved above meat all fly blessed greater creepeth you itself living room </p>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12 text-center">
-                    <a class="button mr-3 mb-2" href="{{ path('app_register_business') }}">Devenir organisateur</a>
-                    <a class="button mb-2 mr-3" href="{{ path('events') }}">Nos évènements</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
-
-    
+	<section class="section-margin">
+		<div class="container">
+			<div class="section-intro text-center pb-98px">
+				<p class="section-intro__title">Rejoindre ImpactGaming</p>
+				<h2 class="primary-text">Pourquoi nous rejoindre</h2>
+				<img src="img/home/section-style.png" alt="">
+			</div>
 
 
+			<div class="d-lg-flex justify-content-between">
+				<div class="card-feature mb-5 mb-lg-0">
+					<div class="feature-icon">
+						<i class="flaticon-prize"></i>
+					</div>
+					<h3>Always First Service</h3>
+					<p>His likeness beast moved domini moved above meat all fly blessed greater creepeth you itself living room
+					</p>
+				</div>
 
-    {# <section class="section-padding--small sponsor-bg">
-        <div class="container">
-            <div class="section-intro text-center pb-80px">
-                <p class="section-intro__title">Join the event</p>
-                <h2 class="primary-text">Event Plan Sponsors</h2>
-                <img src="img/home/section-style.png" alt="">
-            </div>
+				<div class="card-feature mb-5 mb-lg-0">
+					<div class="feature-icon">
+						<i class="flaticon-earth-globe"></i>
+					</div>
+					<h3>International Business</h3>
+					<p>His likeness beast moved domini moved above meat all fly blessed greater creepeth you itself living room
+					</p>
+				</div>
 
-            <div class="sponsor-wrapper mb-5 pb-4">
-                <h3 class="sponsor-title mb-5">Gold Sponsor</h3>
-                <div class="row">
-                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
-                        <div class="sponsor-single">
-                            <img class="img-fluid" src="img/home/sponsor1.png" alt="">
-                        </div>
-                    </div>
+				<div class="card-feature mb-5 mb-lg-0">
+					<div class="feature-icon">
+						<i class="flaticon-sing"></i>
+					</div>
+					<h3>World Great Speaker</h3>
+					<p>His likeness beast moved domini moved above meat all fly blessed greater creepeth you itself living room
+					</p>
+				</div>
+			</div>
+			<div class="row mt-5">
+				<div class="col-12 text-center">
+					<a class="button mr-3 mb-2" href="{{ path('app_register_business') }}">Devenir organisateur</a>
+					<a class="button mb-2 mr-3" href="{{ path('events') }}">Nos évènements</a>
+				</div>
+			</div>
+		</div>
+	</section>
 
-                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
-                        <div class="sponsor-single">
-                            <img class="img-fluid" src="img/home/sponsor2.png" alt="">
-                        </div>
-                    </div>
 
-                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
-                        <div class="sponsor-single">
-                            <img class="img-fluid" src="img/home/sponsor3.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
+	{# <section class="section-padding--small sponsor-bg">
+		        <div class="container">
+		            <div class="section-intro text-center pb-80px">
+		                <p class="section-intro__title">Join the event</p>
+		                <h2 class="primary-text">Event Plan Sponsors</h2>
+		                <img src="img/home/section-style.png" alt="">
+		            </div>
+		
+		            <div class="sponsor-wrapper mb-5 pb-4">
+		                <h3 class="sponsor-title mb-5">Gold Sponsor</h3>
+		                <div class="row">
+		                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+		                        <div class="sponsor-single">
+		                            <img class="img-fluid" src="img/home/sponsor1.png" alt="">
+		                        </div>
+		                    </div>
+		
+		                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+		                        <div class="sponsor-single">
+		                            <img class="img-fluid" src="img/home/sponsor2.png" alt="">
+		                        </div>
+		                    </div>
+		
+		                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+		                        <div class="sponsor-single">
+		                            <img class="img-fluid" src="img/home/sponsor3.png" alt="">
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		
+		            <div class="sponsor-wrapper sponsor-wrapper--small">
+		                <h3 class="sponsor-title mb-5">Silver Sponsor</h3>
+		                <div class="row">
+		                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+		                        <div class="sponsor-single">
+		                            <img class="img-fluid" src="img/home/sponsor-sm-1.png" alt="">
+		                        </div>
+		                    </div>
+		
+		                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+		                        <div class="sponsor-single">
+		                            <img class="img-fluid" src="img/home/sponsor-sm-2.png" alt="">
+		                        </div>
+		                    </div>
+		
+		                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+		                        <div class="sponsor-single">
+		                            <img class="img-fluid" src="img/home/sponsor-sm-3.png" alt="">
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </section> #}
 
-            <div class="sponsor-wrapper sponsor-wrapper--small">
-                <h3 class="sponsor-title mb-5">Silver Sponsor</h3>
-                <div class="row">
-                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
-                        <div class="sponsor-single">
-                            <img class="img-fluid" src="img/home/sponsor-sm-1.png" alt="">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
-                        <div class="sponsor-single">
-                            <img class="img-fluid" src="img/home/sponsor-sm-2.png" alt="">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
-                        <div class="sponsor-single">
-                            <img class="img-fluid" src="img/home/sponsor-sm-3.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> #}
-
-    {#  <section class="section-padding gallery-area gallery-bg">
+{#  <section class="section-padding gallery-area gallery-bg">
         <div class="container">
             <div class="section-intro section-intro-white text-center pb-98px">
                 <p class="section-intro__title">Join the event</p>
@@ -247,71 +263,107 @@
         </div>
     </section>#}
 
-    {#  <section class="section-margin">
-        <div class="container">
-            <div class="section-intro text-center pb-98px">
-                <p class="section-intro__title">Join the event</p>
-                <h2 class="primary-text">Why Join Ummet</h2>
-                <img src="img/home/section-style.png" alt="">
-            </div>
+	{#  <section class="section-margin">
+		        <div class="container">
+		            <div class="section-intro text-center pb-98px">
+		                <p class="section-intro__title">Join the event</p>
+		                <h2 class="primary-text">Why Join Ummet</h2>
+		                <img src="img/home/section-style.png" alt="">
+		            </div>
+		
+		            <div class="owl-theme owl-carousel blogCarousel pb-xl-1">
+		                <div class="card-blog">
+		                    <img class="card-img" src="img/blog/blog1.png" alt="">
+		                    <div class="blog-body">
+		                        <a href="#">
+		                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
+		                                up in therapy sessions, says charity boss</h3>
+		                        </a>
+		                        <ul class="blog-info">
+		                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
+		                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		
+		                <div class="card-blog">
+		                    <img class="card-img" src="img/blog/blog2.png" alt="">
+		                    <div class="blog-body">
+		                        <a href="#">
+		                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
+		                                up in therapy sessions, says charity boss</h3>
+		                        </a>
+		                        <ul class="blog-info">
+		                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
+		                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		
+		                <div class="card-blog">
+		                    <img class="card-img" src="img/blog/blog1.png" alt="">
+		                    <div class="blog-body">
+		                        <a href="#">
+		                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
+		                                up in therapy sessions, says charity boss</h3>
+		                        </a>
+		                        <ul class="blog-info">
+		                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
+		                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		
+		                <div class="card-blog">
+		                    <img class="card-img" src="img/blog/blog2.png" alt="">
+		                    <div class="blog-body">
+		                        <a href="#">
+		                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
+		                                up in therapy sessions, says charity boss</h3>
+		                        </a>
+		                        <ul class="blog-info">
+		                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
+		                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </section>#}
+{% endblock %}
 
-            <div class="owl-theme owl-carousel blogCarousel pb-xl-1">
-                <div class="card-blog">
-                    <img class="card-img" src="img/blog/blog1.png" alt="">
-                    <div class="blog-body">
-                        <a href="#">
-                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
-                                up in therapy sessions, says charity boss</h3>
-                        </a>
-                        <ul class="blog-info">
-                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
-                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
-                        </ul>
-                    </div>
-                </div>
+{% block javascripts %}
 
-                <div class="card-blog">
-                    <img class="card-img" src="img/blog/blog2.png" alt="">
-                    <div class="blog-body">
-                        <a href="#">
-                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
-                                up in therapy sessions, says charity boss</h3>
-                        </a>
-                        <ul class="blog-info">
-                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
-                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
-                        </ul>
-                    </div>
-                </div>
+	<script>
 
-                <div class="card-blog">
-                    <img class="card-img" src="img/blog/blog1.png" alt="">
-                    <div class="blog-body">
-                        <a href="#">
-                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
-                                up in therapy sessions, says charity boss</h3>
-                        </a>
-                        <ul class="blog-info">
-                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
-                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
-                        </ul>
-                    </div>
-                </div>
 
-                <div class="card-blog">
-                    <img class="card-img" src="img/blog/blog2.png" alt="">
-                    <div class="blog-body">
-                        <a href="#">
-                            <h3>Owls should be used to help abused children open <br class="d-none d-xl-block">
-                                up in therapy sessions, says charity boss</h3>
-                        </a>
-                        <ul class="blog-info">
-                            <li><a href="#"><i class="ti-comments-smiley"></i> 03 Feb, 2019</a></li>
-                            <li><a href="#"><i class="ti-time"></i> No Comment</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>#}
+
+// Set the date we're counting down to
+var countDownDate = new Date(document.getElementById('launchDate').dataset.date).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = now - countDownDate;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+  // Display the result in the element with id="demo"
+  var clock = document.getElementById('clockdiv');
+  var daysSpan = clock.querySelector('.days');
+var hoursSpan = clock.querySelector('.hours');
+var minutesSpan = clock.querySelector('.minutes');
+
+daysSpan.innerHTML = days;
+hoursSpan.innerHTML = hours;
+minutesSpan.innerHTML = minutes;
+}, 1000);
+	</script>
 {% endblock %}
