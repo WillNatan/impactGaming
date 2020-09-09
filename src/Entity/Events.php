@@ -100,6 +100,41 @@ class Events
      */
     private $socialLinks;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cp;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $department;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cashprize;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $support;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $banner;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $logo;
+
     public function __construct()
     {
         $this->availableGames = new ArrayCollection();
@@ -352,6 +387,90 @@ class Events
                 $socialLink->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCp(): ?string
+    {
+        return $this->cp;
+    }
+
+    public function setCp(string $cp): self
+    {
+        $this->cp = $cp;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?string
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(string $department): self
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    public function getCashprize(): ?int
+    {
+        return $this->cashprize;
+    }
+
+    public function setCashprize(?int $cashprize): self
+    {
+        $this->cashprize = $cashprize;
+
+        return $this;
+    }
+
+    public function getSupport(): ?string
+    {
+        return $this->support;
+    }
+
+    public function setSupport(string $support): self
+    {
+        $this->support = $support;
+
+        return $this;
+    }
+
+    public function getBanner(): ?string
+    {
+        return $this->banner;
+    }
+
+    public function setBanner(string $banner): self
+    {
+        $this->banner = $banner;
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(string $logo): self
+    {
+        $this->logo = $logo;
 
         return $this;
     }

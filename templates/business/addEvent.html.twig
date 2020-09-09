@@ -26,10 +26,23 @@
 					{{ form_label(form.category) }}
 					{{ form_widget(form.category) }}
 				</div>
-				<div class="form-group">
-					{{ form_label(form.price) }}
-					{{ form_widget(form.price) }}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							{{ form_label(form.price) }}
+							{{ form_widget(form.price) }}
+						</div>
+						<div class="form-group">
+							{{ form_label(form.cashprize) }}
+							{{ form_widget(form.cashprize) }}
+						</div>
+					</div>
+					<div class="col-md-6">
+						{{ form_label(form.support) }}
+							{{ form_widget(form.support) }}
+					</div>
 				</div>
+
 			</div>
 		</div>
 		<div class="row mt-5">
@@ -51,41 +64,60 @@
 				</span>
 				<hr>
 				<span>
+					{{ form_label(form.place) }}
+					{{ form_widget(form.place) }}
+				</span>
+				<hr>
+				<span>
 					{{ form_label(form.address) }}
 					{{ form_widget(form.address) }}
 				</span>
 				<hr>
 				<span>
-					{{ form_label(form.place) }}
-					{{ form_widget(form.place) }}
+					{{ form_label(form.city) }}
+					{{ form_widget(form.city) }}
+				</span>
+				<hr>
+				<span>
+					{{ form_label(form.cp) }}
+					{{ form_widget(form.cp) }}
+				</span>
+				<hr>
+				<span>
+					{{ form_label(form.department) }}
+					{{ form_widget(form.department) }}
 				</span>
 				<hr>
 				<span>
 					{{ form_label(form.websiteLink) }}
 					{{ form_widget(form.websiteLink) }}
 				</span>
-                <hr>
-                <span>
-                    {{ form_label(form.availableGames) }}
+				<hr>
+				<span>
+					{{ form_label(form.availableGames) }}
 					{{ form_widget(form.availableGames) }}
-                </span>
+				</span>
 				{# <button class="button button-header mt-5">Être alerté</button> #}
 			</div>
 			<div class="col-md-8 text-center text-md-left">
 				<div class="form-group">
-                    {{ form_label(form.longDesc) }}
-				    {{ form_widget(form.longDesc) }}
-                </div>
-                <div class="form-group d-flex justify-content-between align-items-center">
-                    <button class="button button-header fb-button" type="button"><i class="fab fa-facebook-f"></i></button>
+					{{ form_label(form.longDesc) }}
+					{{ form_widget(form.longDesc) }}
+				</div>
+				<div class="form-group d-flex justify-content-between align-items-center">
+					<button class="button button-header fb-button" type="button">
+						<i class="fab fa-facebook-f"></i>
+					</button>
 					<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
-                    {{ form_widget(form.fbUrl) }}
-                </div>
-                <div class="form-group d-flex justify-content-between align-items-center">
-                    <button class="button button-header tw-button" type="button"><i class="fab fa-twitter"></i></button>
+					{{ form_widget(form.fbUrl) }}
+				</div>
+				<div class="form-group d-flex justify-content-between align-items-center">
+					<button class="button button-header tw-button" type="button">
+						<i class="fab fa-twitter"></i>
+					</button>
 					<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
-                    {{ form_widget(form.twUrl) }}
-                </div>
+					{{ form_widget(form.twUrl) }}
+				</div>
 			</div>
 		</div>
 		<div class="text-center">
@@ -98,27 +130,27 @@
 {% block javascripts %}
 	<script>
 		document.querySelector('.fb-button').addEventListener("click", toggleFbInput);
-		document.querySelector('.tw-button').addEventListener("click", toggleTwInput);
+document.querySelector('.tw-button').addEventListener("click", toggleTwInput);
 
-		function toggleFbInput(){
-			if(document.querySelector('.fbInput').disabled == true){
-				document.querySelector('.fbInput').disabled = false;
-				document.querySelector('.checked-button-fb').classList.remove('d-none')
-			}else{
-				document.querySelector('.fbInput').disabled = true;
-				document.querySelector('.checked-button-fb').classList.add('d-none')
-				document.querySelector('.fbInput').value = '';
-			}
-		}
-		function toggleTwInput(){
-			if(document.querySelector('.twInput').disabled == true){
-				document.querySelector('.twInput').disabled = false;
-				document.querySelector('.checked-button-tw').classList.remove('d-none')
-			}else{
-				document.querySelector('.twInput').disabled = true;
-				document.querySelector('.checked-button-tw').classList.add('d-none')
-				document.querySelector('.twInput').value = '';
-			}
-		}
+function toggleFbInput() {
+if (document.querySelector('.fbInput').disabled == true) {
+document.querySelector('.fbInput').disabled = false;
+document.querySelector('.checked-button-fb').classList.remove('d-none')
+} else {
+document.querySelector('.fbInput').disabled = true;
+document.querySelector('.checked-button-fb').classList.add('d-none')
+document.querySelector('.fbInput').value = '';
+}
+}
+function toggleTwInput() {
+if (document.querySelector('.twInput').disabled == true) {
+document.querySelector('.twInput').disabled = false;
+document.querySelector('.checked-button-tw').classList.remove('d-none')
+} else {
+document.querySelector('.twInput').disabled = true;
+document.querySelector('.checked-button-tw').classList.add('d-none')
+document.querySelector('.twInput').value = '';
+}
+}
 	</script>
 {% endblock %}
