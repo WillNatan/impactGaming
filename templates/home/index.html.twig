@@ -26,8 +26,7 @@
 				</div>
 				<div class="col-lg-6 pl-xl-5 justify-content-center align-items-center">
                 {# Si la date du jour est supérieure que la date de lancement de l'évènement et si la date du jour est inférieure à la date de fin #}
-                {% dump(lastEvent.launchDate) %}
-                {% dump(date()) %}
+               
                 
                 {% if date().diff(lastEvent.launchDate).invert == 1 and date().diff(lastEvent.stopDate).invert == 0 %}
                     <h2>Evènement en cours <i class="fa fa-check text-success"></i></h2>
