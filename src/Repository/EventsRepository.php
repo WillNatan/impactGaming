@@ -59,7 +59,7 @@ class EventsRepository extends ServiceEntityRepository
             ->select('e')
             ->where('e.user = :user')
             ->setParameter('user',$user)
-            
+            ->addOrderBy('e.launchDate','DESC')
         ;
     }
 
@@ -70,6 +70,7 @@ class EventsRepository extends ServiceEntityRepository
             $query
             ->andWhere('e.category = :category')
             ->setParameter('category', $searchEvent->getCategory())
+            ->addOrderBy('e.launchDate','DESC')
             ;
         }
         
