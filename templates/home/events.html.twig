@@ -59,7 +59,7 @@
 								{% if event.logo is not empty %}
 									<div class="col-md-2">
 										<div class="event-img">
-											<a href="{{ path('my_events_business',{'slug':event.slug}) }}">
+											<a href="{{ path('single_event',{'slug':event.slug}) }}">
 												<img src="{{ asset('img/uploads/'~event.logo)}}" alt="Image evenement" class="img-fluid">
 											</a>
 										</div>
@@ -67,7 +67,7 @@
 								{% endif %}
 								<div class="col-md-9">
 									<div class="event-infos">
-										<a href="{{ path('my_events_business',{'slug':event.slug}) }}" class="text-center text-md-left">
+										<a href="{{ path('single_event',{'slug':event.slug}) }}" class="text-center text-md-left">
 											<h1 class="event-title">{{ event.name }}</h1>
 										</a>
 										<span class="event-place text-center text-md-left">
