@@ -1,4 +1,16 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="container">
+    <div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+        {{ form_widget(form) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-success">{{ button_label|default('Ajouter') }}</button>
+    </div>
+    <div class="col-md-12">
+        <a href="{{ path('event_category_index') }}" class="btn btn-info mt-1"><i class="fa fa-arrow-left"></i></a>
+    </div>
+</div>
 {{ form_end(form) }}

@@ -8,40 +8,42 @@
 		<div class="container-fluid pt-5">
 			<div class="row">
 				<div class="col-md-2">
-					<div class="ad-banner">
-						<img src="{{ asset('img/banner/banner.png') }}" class="img-fluid w-100" alt="">
-					</div>
-					<div class="ad-banner">
-						<img src="{{ asset('img/banner/banner.png') }}" class="img-fluid w-100" alt="">
-					</div>
+					
 				</div>
 				<div class="col-md-8">
-					<div class="row">
-						<div class="col-md-8">
-							<div class="form-inline">
-								<div class="form-group">
-									<label for="sortList">Filter par &nbsp;</label>
-									<select id="sortList" class="form-control">
-										<option value="">Catégorie</option>
-										<option value="">Ordre croissant</option>
-										<option value="">Ordre décroissant</option>
-										<option value="">Prix</option>
-									</select>
-									<button class="button button-header ml-1">
-										<i class="fa fa-search"></i>
-
-									</button>
-
-								</div>
-
+				<h4>Filtrer les evènements</h4>
+					<div class="row ">
+						<div class="col-md-12">
+							{{ form_start(form) }}
+							<div class="row">
+							<div class="col-md-6">
+								{{ form_label(form.category) }}
+								{{ form_widget(form.category) }}
 							</div>
-
+							<div class="col-md-4">
+								{{ form_label(form.price) }}
+								{{ form_widget(form.price) }}
+							</div>
+							<div class="col-md-2">
+								{{ form_label(form.support) }}
+								{{ form_widget(form.support) }}
+							</div>
+							<div class="col-md-4">
+								{{ form_label(form.game) }}
+								{{ form_widget(form.game) }}
+							</div>
+							<div class="col-md-4">
+								{{ form_label(form.department) }}
+								{{ form_widget(form.department) }}
+							</div>
+							<div class="col-md-2 ">
+								<label for="">&nbsp;</label>
+								<button class="btn btn-info d-block"><i class="fa fa-search"></i></button>
+							</div>
+							</div>
+							{{ form_end(form) }}
 						</div>
-						<div class="col-md-4">
-							<a href="{{ path('events_business_new') }}" class="ml-auto">
-								<button class="button button-header">Ajouter un évènement</button>
-							</a>
-						</div>
+						
 					</div>
 					<h1>Mes évènements</h1>
 
@@ -50,31 +52,34 @@
 							<div class="event-card row no-gutters">
 								<div class="col-md-2">
 									<div class="event-date h-100">
-										<p class="event-day">{{ event.launchDate|date('d') }}<br/><span class="month">{{ event.launchDate|format_datetime(pattern='MMM',locale='en') }}</span>
+										<p class="event-day">{{ event.launchDate|date('d') }}<br/><span class="month">{{ event.launchDate|format_datetime(pattern='MMM') }}</span>
 										</p>
 									</div>
 								</div>
-								<div class="col-md-2">
-									<div class="event-img">
-										<a href="{{ path('my_events_business',{'slug':event.slug}) }}">
-											<img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Paris_Games_Week_%282016%29_Logo.png" alt="Image evenement" class="img-fluid">
-										</a>
+								{% if event.logo is not empty %}
+									<div class="col-md-2">
+										<div class="event-img">
+											<a href="{{ path('my_events_business',{'slug':event.slug}) }}">
+												<img src="{{ asset('img/uploads/'~event.logo)}}" alt="Image evenement" class="img-fluid">
+											</a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-7">
+								{% endif %}
+								<div class="col-md-9">
 									<div class="event-infos">
 										<a href="{{ path('my_events_business',{'slug':event.slug}) }}" class="text-center text-md-left">
 											<h1 class="event-title">{{ event.name }}</h1>
 										</a>
 										<span class="event-place text-center text-md-left">
 											<i class="fa fa-map-marker-alt"></i>
-											{{ event.place }}
+											{{ event.city }}
 											-
-											{{ event.launchDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}
+											{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 											-
-											{{ event.stopDate|format_datetime(pattern='d MMMM yyyy', locale='en') }}</span>
+											{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</span>
 										<p class="event-price text-center text-md-left">{{ event.price }}
 											€</p>
+											<p>Cashprize : {{ event.cashprize }} €</p>
 									</div>
 								</div>
 								<div class="col-md-1">
@@ -94,12 +99,7 @@
 				</div>
 
 				<div class="col-md-2">
-					<div class="ad-banner">
-						<img src="{{ asset('img/banner/banner.png') }}" class="img-fluid w-100" alt="">
-					</div>
-					<div class="ad-banner">
-						<img src="{{ asset('img/banner/banner.png') }}" class="img-fluid w-100" alt="">
-					</div>
+					
 				</div>
 
 			</div>

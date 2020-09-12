@@ -15,10 +15,12 @@
 		<div class="row">
 			<div class="col-md-12 text-center text-md-left">
 				{{ form_label(form.name) }}
+				<span class="text-danger">{{ form_errors(form.name) }}</span>
 				{{ form_widget(form.name) }}
 			</div>
 			<div class="col-md-6 text-center text-md-left">
 				{{ form_label(form.shortDesc) }}
+				<span class="text-danger">{{ form_errors(form.shortDesc) }}</span>
 				{{ form_widget(form.shortDesc) }}
 			</div>
 			<div class="col-md-6 justify-content-center">
@@ -39,10 +41,20 @@
 					</div>
 					<div class="col-md-6">
 						{{ form_label(form.support) }}
-							{{ form_widget(form.support) }}
+						{{ form_widget(form.support) }}
+
 					</div>
 				</div>
-
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					{{ form_label(form.banner) }}
+					{{ form_widget(form.banner) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(form.logo) }}
+					{{ form_widget(form.logo) }}
+				</div>
 			</div>
 		</div>
 		<div class="row mt-5">
@@ -61,11 +73,6 @@
 				<span>
 					{{ form_label(form.ticketNumber) }}
 					{{ form_widget(form.ticketNumber) }}
-				</span>
-				<hr>
-				<span>
-					{{ form_label(form.place) }}
-					{{ form_widget(form.place) }}
 				</span>
 				<hr>
 				<span>

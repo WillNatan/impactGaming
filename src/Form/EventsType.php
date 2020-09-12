@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Events;
 use App\Entity\EventCategory;
 use App\Entity\AvailableGames;
+use App\Entity\Department;
+use App\Entity\Platform;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -14,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class EventsType extends AbstractType
@@ -22,8 +25,9 @@ class EventsType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label'=>"Nom de l'évènement",'attr'=>['class'=>'form-control']])
+            ->add('banner', FileType::class, ['required'=>false,'label'=>"Bannière (1920x1080)"])
+            ->add('logo', FileType::class, ['required'=>false,'label'=>"Logo (350x400)"])
             ->add('websiteLink', TextType::class, ['label'=>"Lien du site web",'attr'=>['class'=>'form-control']])
-            ->add('place', TextType::class, ['label'=>"Lieu de l'évènement",'attr'=>['class'=>'form-control']])
             ->add('launchDate', DateTimeType::class, ['label'=>"Date de lancement",'widget'=>'single_text', 'attr'=>['class'=>'form-control']])
             ->add('stopDate', DateTimeType::class, ['label'=>"Date de fin",'widget'=>'single_text', 'attr'=>['class'=>'form-control']])
             ->add('shortDesc', TextareaType::class, ['label'=>"Description courte",'attr'=>['class'=>'form-control', 'cols'=>'40', 'rows'=>'5']])
@@ -31,20 +35,13 @@ class EventsType extends AbstractType
             ->add('address', TextType::class, ['label'=>"Adresse",'attr'=>['class'=>'form-control']])
             ->add('city', TextType::class, ['label'=>"Ville",'attr'=>['class'=>'form-control']])
             ->add('cp', TextType::class, ['label'=>"Code Postal",'attr'=>['class'=>'form-control']])
-            ->add('department', TextType::class, ['label'=>"Département",'attr'=>['class'=>'form-control']])
+            ->add('department', EntityType::class, ['class'=>Department::class, 'choice_label'=>'departmentName','label'=>"Département",'attr'=>['class'=>'form-control'],'placeholder'=>'Choisir un département'])
             ->add('ticketNumber', IntegerType::class, ['label'=>"Nombre de places",'attr'=>['class'=>'form-control']])
             ->add('price', IntegerType::class, ['label'=>"Prix d'entrée",'attr'=>['class'=>'form-control','step'=>'0.01','min'=>'0.00', 'max'=>'10000.00']])
-            ->add('cashprize', IntegerType::class, ['label'=>"Cashprize",'attr'=>['class'=>'form-control','step'=>'0.01','min'=>'0.00', 'max'=>'10000.00']])
-            ->add('support', ChoiceType::class, ['label'=>'Support', 'attr'=>['class'=>''],
-                    'choices'=>[
-                        'PC'=>'PC',
-                        'Console'=>'CONSOLE'
-                    ],
-                    'multiple'=>true,
-                    'expanded'=>true
-            ])
+            ->add('cashprize', IntegerType::class, ['label'=>"Cashprize",'attr'=>['class'=>'form-control','step'=>'0.01','min'=>'0.00']])
+            ->add('support', EntityType::class, ['class'=>Platform::class, 'choice_label'=>'platformName', 'attr'=>['class'=>'form-control'],'label'=>'Support', 'placeholder'=>'Choisissez un support','multiple'=>true])
             ->add('availableGames', EntityType::class,['label'=>"Jeux disponibles",'class'=>AvailableGames::class, 'choice_label'=>'gameName','multiple'=>true,'attr'=>['class'=>'form-control']])
-            ->add('category', EntityType::class, ['label'=>"Catégorie",'attr'=>['class'=>'form-control'],'class'=>EventCategory::class, 'choice_label'=>'categoryName'])
+            ->add('category', EntityType::class, ['label'=>"Catégorie",'attr'=>['class'=>'form-control'],'class'=>EventCategory::class, 'choice_label'=>'categoryName','placeholder'=>'Choisir une catégorie'])
             ->add('fbUrl', TextType::class, ['mapped'=>false, 'attr'=>['class'=>'form-control ml-3 fbInput', 'disabled'=>'true','placeholder'=>"Entrez votre lien ici"]])
             ->add('twUrl', TextType::class, ['mapped'=>false, 'attr'=>['class'=>'form-control ml-3 twInput', 'disabled'=>'true','placeholder'=>"Entrez votre lien ici"]])
         ;

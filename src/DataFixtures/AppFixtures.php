@@ -57,7 +57,7 @@ class AppFixtures extends Fixture
                 $event
                     ->setName($name)
                     ->setWebsiteLink($faker->url)
-                    ->setPlace($faker->country)
+                    ->setCity($faker->city)
                     ->setPrice(mt_rand(30,1500))
                     ->setLaunchDate($faker->dateTimeBetween($startDate = '+1 day', $endDate = '+2 years', $timezone = null))
                     ->setStopDate($faker->dateTimeBetween($startDate = '+2 years', $endDate = '+3 years', $timezone = null))
@@ -67,6 +67,7 @@ class AppFixtures extends Fixture
                     ->setUser($user)
                     ->setAddress($faker->address)
                     ->setTicketNumber(mt_rand(0,1000))
+                    ->setCashprize(mt_rand(10000,200000))
                     ->setCategory($category);
                 $manager->persist($event);
                       

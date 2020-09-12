@@ -1,13 +1,16 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Edit EventCategory{% endblock %}
+{% block title %}Modifier une catégorie{% endblock %}
 
 {% block body %}
-    <h1>Edit EventCategory</h1>
-
-    {{ include('admin/event_category/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('event_category_index') }}">back to list</a>
-
-    {{ include('admin/event_category/_delete_form.html.twig') }}
+    <div class="card shadow mb-4">
+		
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Modifier une catégorie</h6>
+			{{ include('admin/event_category/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+			{{ include('admin/event_category/_form.html.twig', {'button_label': 'Modifier'}) }}
+		</div>
+	</div>
 {% endblock %}

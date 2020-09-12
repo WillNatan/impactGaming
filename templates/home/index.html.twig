@@ -9,7 +9,7 @@
 			<p>{{ lastEvent.launchDate|date('Y-m-d') }}
 				-
 				{{ lastEvent.launchDate|date('Y-m-d') }},
-				{{ lastEvent.place }}</p>
+				{{ lastEvent.city }}</p>
 			<h1>{{ lastEvent.name }}</h1>
 			<a class="button button-header" href="{{ path('single_event', {'slug':lastEvent.slug}) }}">Détails</a>
 		</div>
@@ -20,7 +20,7 @@
 				<div class="col-lg-6 align-self-center mb-5 mb-lg-0">
 					<div class="innovative-wrapper">
 						<h3 class="primary-text">{{ lastEvent.name }}</h3>
-						<p class="h4 primary-text2 mb-3">{{ lastEvent.place }}</p>
+						<p class="h4 primary-text2 mb-3">{{ lastEvent.city }}</p>
 						<p>{{ lastEvent.shortDesc }}</p>
 					</div>
 				</div>

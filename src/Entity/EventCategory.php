@@ -32,6 +32,7 @@ class EventCategory
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->searchEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,4 +82,6 @@ class EventCategory
 
         return $this;
     }
+
+
 }

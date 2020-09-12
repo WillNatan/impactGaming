@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Events;
 use App\Entity\SocialLinks;
+use App\Form\EventsAdminType;
 use App\Form\EventsType;
 use App\Repository\EventsRepository;
 use App\Repository\SocialLinksRepository;
@@ -35,12 +36,34 @@ class EventsController extends AbstractController
     public function new(Request $request): Response
     {
         $event = new Events();
-        $form = $this->createForm(EventsType::class, $event);
+        $form = $this->createForm(EventsAdminType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
+            $replaceSpace = str_replace(" ", "-", $event->getName());
+            $replaceComma = str_replace(',', '', $replaceSpace);
+            $event->setSlug($replaceComma);
+            $event->setUser($this->getUser());
+
+            if (!is_null($form->get('fbUrl')->getData())) {
+                $ss = new SocialLinks();
+                $ss->setUrl($form->get('fbUrl')->getData())
+                    ->setEvent($event)
+                    ->setType('facebook')
+                    ->setClass('fa-facebook-f');
+                $entityManager->persist($ss);
+            }
+            if (!is_null($form->get('twUrl')->getData())) {
+                $ss = new SocialLinks();
+                $ss->setUrl($form->get('twUrl')->getData())
+                    ->setEvent($event)
+                    ->setType('twitter')
+                    ->setClass('fa-twitter');
+                $entityManager->persist($ss);
+            }
+
+            
             $entityManager->persist($event);
             $entityManager->flush();
 
@@ -70,7 +93,7 @@ class EventsController extends AbstractController
     {
 
 
-        $form = $this->createForm(EventsType::class, $event);
+        $form = $this->createForm(EventsAdminType::class, $event);
         $form->handleRequest($request);
 
 
@@ -126,6 +149,11 @@ class EventsController extends AbstractController
                         }
                     }
                 }
+            }
+            if ($event->getName() != $currentEventName) {
+                $replaceSpace = str_replace(" ", "-", $event->getName());
+                $replaceComma = str_replace(',', '', $replaceSpace);
+                $event->setSlug($replaceComma);
             }
             $this->getDoctrine()->getManager()->flush();
 

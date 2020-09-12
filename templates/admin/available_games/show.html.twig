@@ -1,30 +1,26 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}AvailableGames{% endblock %}
+{% block title %}Détail jeu{% endblock %}
 
 {% block body %}
-    <h1>AvailableGames</h1>
+    <div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Détails jeu</h6>
+            <a href="{{ path('available_games_index') }}" class=" ml-auto btn btn-info"><i class="fa fa-arrow-left"></i></a>
+            <a href="{{ path('available_games_edit', {'id': available_game.id}) }}" class="btn btn-warning ml-1"><i class="fa fa-edit"></i></a>
+            {{ include('admin/available_games/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+    <h1>Jeu</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ available_game.id }}</td>
-            </tr>
-            <tr>
-                <th>GameName</th>
+                <th>Nom du jeu</th>
                 <td>{{ available_game.gameName }}</td>
-            </tr>
-            <tr>
-                <th>GameUrl</th>
-                <td>{{ available_game.gameUrl }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('available_games_index') }}">back to list</a>
-
-    <a href="{{ path('available_games_edit', {'id': available_game.id}) }}">edit</a>
-
-    {{ include('available_games/_delete_form.html.twig') }}
+</div>
+</div>
 {% endblock %}

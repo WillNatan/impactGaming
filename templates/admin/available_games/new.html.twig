@@ -3,9 +3,14 @@
 {% block title %}New AvailableGames{% endblock %}
 
 {% block body %}
-    <h1>Create new AvailableGames</h1>
-
-    {{ include('admin/available_games/_form.html.twig') }}
-
-    <a href="{{ path('available_games_index') }}">back to list</a>
+    <div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Ajouter un jeu</h6>
+			
+		</div>
+		<div class="card-body">
+         {{ include('admin/available_games/_form.html.twig') }}
+        
+        </div>
+	</div>
 {% endblock %}

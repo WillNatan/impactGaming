@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Events;
+use App\Entity\SearchEvent;
 use App\Form\EventsType;
 use App\Form\EditUserType;
 use App\Entity\SocialLinks;
+use App\Form\SearchEventType;
 use App\Repository\EventsRepository;
 use App\Repository\SocialLinksRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -42,6 +44,9 @@ class HomeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $replaceSpace = str_replace(" ", "-", $event->getName());
             $replaceComma = str_replace(',', '', $replaceSpace);
+            $event->setSlug($replaceComma);
+            $event->setUser($this->getUser());
+
             if (!is_null($form->get('fbUrl')->getData())) {
                 $ss = new SocialLinks();
                 $ss->setUrl($form->get('fbUrl')->getData())
@@ -59,11 +64,8 @@ class HomeController extends AbstractController
                 $entityManager->persist($ss);
             }
 
-            $event->setSlug($replaceComma);
-            $event->setUser($this->getUser());
-
+            $event->setOrganizer($this->getUser()->getFirstName().' '.$this->getUser()->getLastName());
             $entityManager->persist($event);
-
             $entityManager->flush();
             return $this->redirectToRoute('my_events');
         }
@@ -79,23 +81,27 @@ class HomeController extends AbstractController
      */
     public function myEvents(EventsRepository $eventsRepository, PaginatorInterface $paginator, Request $request)
     {
+        $searchEvent = new SearchEvent();
+        $form = $this->createForm(SearchEventType::class, $searchEvent);
+        $form->handleRequest($request);
         $pagination = $paginator->paginate(
-            $eventsRepository->findByUser($this->getUser()), /* query NOT result */
+            $eventsRepository->findByAllQueriesByUser($searchEvent, $this->getUser()), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
         );
         return $this->render('home/myEvents.html.twig', [
             'events' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("mes-evenements/{slug}", name="my_events_business" , methods={"GET"})
      */
-    public function myEventsBusiness(Events $event)
+    public function myEventsBusiness(Events $event, Request $request)
     {
         return $this->render('home/event-single-business.html.twig', [
-            'event' => $event
+            'event' => $event,
         ]);
     }
 
@@ -188,6 +194,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/profile.html.twig', [
             'events' => $pagination,
+            
         ]);
     }
 
@@ -198,14 +205,19 @@ class HomeController extends AbstractController
      */
     public function events(EventsRepository $eventsRepository, PaginatorInterface $paginator, Request $request)
     {
+
+        $searchEvent = new SearchEvent();
+        $form = $this->createForm(SearchEventType::class, $searchEvent);
+        $form->handleRequest($request);
         $pagination = $paginator->paginate(
-            $eventsRepository->findAllEvents(), /* query NOT result */
+            $eventsRepository->findByAllQueries($searchEvent), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
         );
 
         return $this->render('home/events.html.twig', [
             'events' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 

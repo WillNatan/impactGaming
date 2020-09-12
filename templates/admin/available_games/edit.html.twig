@@ -3,11 +3,14 @@
 {% block title %}Edit AvailableGames{% endblock %}
 
 {% block body %}
-    <h1>Edit AvailableGames</h1>
-
-    {{ include('admin/available_games/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('available_games_index') }}">back to list</a>
-
-    {{ include('admin/available_games/_delete_form.html.twig') }}
+    <div class="card shadow mb-4">
+		
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Modifier un jeu</h6>
+			{{ include('admin/available_games/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+			{{ include('admin/available_games/_form.html.twig', {'button_label': 'Modifier'}) }}
+		</div>
+	</div>
 {% endblock %}

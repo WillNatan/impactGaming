@@ -26,7 +26,7 @@ class EventCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="event_category_new", methods={"GET","POST"})
+     * @Route("/nouveau", name="event_category_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -59,7 +59,7 @@ class EventCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="event_category_edit", methods={"GET","POST"})
+     * @Route("/{id}/modification", name="event_category_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, EventCategory $eventCategory): Response
     {

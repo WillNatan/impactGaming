@@ -9,12 +9,10 @@
 			<p>{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 				-
 				{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }},
-				{{ event.place }}</p>
+				{{ event.city }}</p>
 			<h1>{{ event.name }}</h1>
-
 		</div>
 	</section>
-
 	<section class="">
 		<div class="description pb-5 pt-5 bg-gray">
 			<div class="container">
@@ -39,7 +37,6 @@
 								<span class="smalltext">Mins</span>
 							</li>
 						</ul>
-
 						<div class="clockdiv-content text-center">
 							<p class="h4 primary-text2 mb-2">{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 								-

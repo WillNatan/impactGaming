@@ -1,26 +1,26 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}EventCategory{% endblock %}
+{% block title %}Détails catégorie{% endblock %}
 
 {% block body %}
-    <h1>EventCategory</h1>
+    <div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Détails catégorie</h6>
+            <a href="{{ path('event_category_index') }}" class=" ml-auto btn btn-info"><i class="fa fa-arrow-left"></i></a>
+            <a href="{{ path('event_category_edit', {'id': event_category.id}) }}" class="btn btn-warning ml-1"><i class="fa fa-edit"></i></a>
+            {{ include('admin/event_category/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+    <h1>Catégorie</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ event_category.id }}</td>
-            </tr>
-            <tr>
-                <th>CategoryName</th>
+                <th>Nom de la catégorie</th>
                 <td>{{ event_category.categoryName }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('event_category_index') }}">back to list</a>
-
-    <a href="{{ path('event_category_edit', {'id': event_category.id}) }}">edit</a>
-
-    {{ include('event_category/_delete_form.html.twig') }}
+</div>
+</div>
 {% endblock %}

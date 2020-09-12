@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier un départment{% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+		
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Modifier un département</h6>
+			{{ include('admin/department/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+			{{ include('admin/department/_form.html.twig', {'button_label': 'Modifier'}) }}
+		</div>
+	</div>
+{% endblock %}

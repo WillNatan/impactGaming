@@ -9,7 +9,7 @@
 			<p>{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 				-
 				{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }},
-				{{ event.place }}</p>
+				{{ event.city }}</p>
 			<h1>{{ event.name }}</h1>
 
 		</div>
@@ -77,10 +77,26 @@
 				</span>
 				<hr>
 				<span>Organisateur:
-					{{ event.user.company ? event.user.company:event.user.firstName +' '+event.user.lastName  }}</span>
+					{{ event.user.company ? event.user.company ~ ' ' ~ '(' ~ event.organizer ~ ')'  :event.user.firstName +' '+event.user.lastName  }}</span>
 				<hr>
-				<span>Adresse:{{ event.address }}</span>
+				<span>Adresse:{{ event.address }}, {{ event.city }}, {{ event.department.departmentName }}, {{ event.cp }}</span>
 				{# <button class="button button-header mt-5">Être alerté</button> #}
+				<hr>
+				
+				
+				<h5>Jeux disponibles</h5>
+				<ul>
+					{% for game in event.availableGames %}
+						<li>{{ game.gameName }}</li>
+					{% endfor %}
+				</ul>
+				<hr>
+				<h5>Support(s)</h5>
+				<ul>
+					{% for support in event.support %}
+						<li>{{ support.platformName }}</li>
+					{% endfor %}
+				</ul>
 				<hr>
 				<div class="d-flex flex-row justify-content-center">
 					{% for socialLink in event.socialLinks %}

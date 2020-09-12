@@ -6,9 +6,18 @@ use App\Repository\EventsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventsRepository::class)
+ * @UniqueEntity(
+ * fields={"name"},
+ *     errorPath="name",
+ *     message="Ce nom est déjà utilisé !"
+ * )
  */
 class Events
 {
@@ -16,11 +25,17 @@ class Events
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 100,
+     *      minMessage = "Le nom de l'évènement doit contenir {{ limit }} minimum !",
+     *      maxMessage = "Le nom de l'évènement ne peut dépasser {{ limit }} charactères !")
      */
     private $name;
 
@@ -28,11 +43,6 @@ class Events
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $websiteLink;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $place;
 
     /**
      * @ORM\Column(type="datetime")
@@ -46,6 +56,11 @@ class Events
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 250,
+     *      minMessage = "La description courte doit contenir {{ limit }} minimum !",
+     *      maxMessage = "La description courte ne peut dépasser {{ limit }} charactères !")
      */
     private $shortDesc;
 
@@ -109,37 +124,43 @@ class Events
      * @ORM\Column(type="string", length=255)
      */
     private $cp;
-
+    
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $department;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true)
      */
     private $cashprize;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $banner;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $logo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Department::class, inversedBy="events")
+     */
+    private $department;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Platform::class, inversedBy="events")
      */
     private $support;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $banner;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $logo;
+    private $organizer;
 
     public function __construct()
     {
         $this->availableGames = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->socialLinks = new ArrayCollection();
+        $this->support = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,18 +188,6 @@ class Events
     public function setWebsiteLink(string $websiteLink): self
     {
         $this->websiteLink = $websiteLink;
-
-        return $this;
-    }
-
-    public function getPlace(): ?string
-    {
-        return $this->place;
-    }
-
-    public function setPlace(string $place): self
-    {
-        $this->place = $place;
 
         return $this;
     }
@@ -415,18 +424,6 @@ class Events
         return $this;
     }
 
-    public function getDepartment(): ?string
-    {
-        return $this->department;
-    }
-
-    public function setDepartment(string $department): self
-    {
-        $this->department = $department;
-
-        return $this;
-    }
-
     public function getCashprize(): ?int
     {
         return $this->cashprize;
@@ -435,18 +432,6 @@ class Events
     public function setCashprize(?int $cashprize): self
     {
         $this->cashprize = $cashprize;
-
-        return $this;
-    }
-
-    public function getSupport(): ?string
-    {
-        return $this->support;
-    }
-
-    public function setSupport(string $support): self
-    {
-        $this->support = $support;
 
         return $this;
     }
@@ -471,6 +456,56 @@ class Events
     public function setLogo(string $logo): self
     {
         $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): self
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Platform[]
+     */
+    public function getSupport(): Collection
+    {
+        return $this->support;
+    }
+
+    public function addSupport(Platform $support): self
+    {
+        if (!$this->support->contains($support)) {
+            $this->support[] = $support;
+        }
+
+        return $this;
+    }
+
+    public function removeSupport(Platform $support): self
+    {
+        if ($this->support->contains($support)) {
+            $this->support->removeElement($support);
+        }
+
+        return $this;
+    }
+
+    public function getOrganizer(): ?string
+    {
+        return $this->organizer;
+    }
+
+    public function setOrganizer(string $organizer): self
+    {
+        $this->organizer = $organizer;
 
         return $this;
     }

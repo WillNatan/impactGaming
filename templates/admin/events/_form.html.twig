@@ -3,6 +3,9 @@
 	<div class="col-md-3">
 		<div class="form-group">
 			{{ form_label(form.name) }}
+			{% apply spaceless %}
+			{{ form_errors(form.name) }}
+			{% endapply %}
 			{{ form_widget(form.name) }}
 		</div>
 		<div class="form-group">
@@ -10,8 +13,8 @@
 			{{ form_widget(form.websiteLink) }}
 		</div>
 		<div class="form-group">
-			{{ form_label(form.place) }}
-			{{ form_widget(form.place) }}
+			{{ form_label(form.city) }}
+			{{ form_widget(form.city) }}
 		</div>
 		<div class="form-group">
 			{{ form_label(form.launchDate) }}
@@ -26,12 +29,20 @@
 			{{ form_widget(form.price) }}
 		</div>
 		<div class="form-group">
+			{{ form_label(form.cashprize) }}
+			{{ form_widget(form.cashprize) }}
+		</div>
+		<div class="form-group">
 			{{ form_label(form.category) }}
 			{{ form_widget(form.category) }}
 		</div>
 		<div class="form-group">
 			{{ form_label(form.availableGames) }}
 			{{ form_widget(form.availableGames) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.organizer) }}
+			{{ form_widget(form.organizer) }}
 		</div>
 		{% if event.socialLinks|length == 0 %}
 			<div class="form-group d-flex justify-content-between align-items-center">
@@ -57,7 +68,9 @@
 						</button>
 						<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
 						{{ form_widget(form.fbUrl, {'attr':{'value':socialLink.url}}) }}
-						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}"><i class="fa fa-trash"></i></button>
+						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}">
+							<i class="fa fa-trash"></i>
+						</button>
 					</div>
 					<div class="form-group d-flex justify-content-between align-items-center">
 						<button class="btn btn-info tw-button" type="button">
@@ -80,7 +93,9 @@
 						</button>
 						<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
 						{{ form_widget(form.twUrl, {'attr':{'value':socialLink.url}}) }}
-						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}"><i class="fa fa-trash"></i></button>
+						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}">
+							<i class="fa fa-trash"></i>
+						</button>
 					</div>
 				{% endif %}
 			{% endfor %}
@@ -93,7 +108,9 @@
 						</button>
 						<i class="fa fa-check ml-2 checked-button-fb d-none"></i>
 						{{ form_widget(form.fbUrl, {'attr':{'value':socialLink.url}}) }}
-						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}"><i class="fa fa-trash"></i></button>
+						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}">
+							<i class="fa fa-trash"></i>
+						</button>
 					</div>
 				{% elseif socialLink.type == "twitter" %}
 					<div class="form-group d-flex justify-content-between align-items-center">
@@ -102,7 +119,9 @@
 						</button>
 						<i class="fa fa-check ml-2 checked-button-tw d-none"></i>
 						{{ form_widget(form.twUrl, {'attr':{'value':socialLink.url}}) }}
-						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}"><i class="fa fa-trash"></i></button>
+						<button type="button" class="btn btn-danger ml-1 deleteLinkBtn" data-path="{{ path('slink_delete', {'socialid':socialLink.id}) }}" data-token="{{ csrf_token('delete' ~ socialLink.id) }}">
+							<i class="fa fa-trash"></i>
+						</button>
 					</div>
 				{% endif %}
 			{% endfor %}
@@ -118,10 +137,28 @@
 							{{ form_widget(form.address) }}
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<div class="form-group">
 							{{ form_label(form.ticketNumber) }}
 							{{ form_widget(form.ticketNumber) }}
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							{{ form_label(form.support) }}
+							{{ form_widget(form.support) }}
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							{{ form_label(form.cp) }}
+							{{ form_widget(form.cp) }}
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="form-group">
+							{{ form_label(form.department) }}
+							{{ form_widget(form.department) }}
 						</div>
 					</div>
 				</div>
@@ -134,6 +171,18 @@
 				<div class="form-group">
 					{{ form_label(form.longDesc) }}
 					{{ form_widget(form.longDesc) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					{{ form_label(form.banner) }}
+					{{ form_widget(form.banner) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					{{ form_label(form.logo) }}
+					{{ form_widget(form.logo) }}
 				</div>
 			</div>
 		</div>
@@ -172,16 +221,12 @@ document.querySelector('.checked-button-tw').classList.add('d-none')
 document.querySelector('.fbInput').value = defaultValueFb;
 }
 }
-document.querySelectorAll('.deleteLinkBtn').forEach((button) =>{
-	button.addEventListener('click', deleteLink)
+document.querySelectorAll('.deleteLinkBtn').forEach((button) => {
+button.addEventListener('click', deleteLink)
 });
-function deleteLink(){
-	fetch(document.location.origin + this.dataset.path, {
-		method: 'DELETE'
-	}).then((results) =>{
-		location.reload()
-	} )
+function deleteLink() {
+fetch(document.location.origin + this.dataset.path, {method: 'DELETE'}).then((results) => {
+location.reload()
+})
 }
-
-
 </script>

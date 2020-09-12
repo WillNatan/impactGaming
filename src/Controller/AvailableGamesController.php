@@ -26,7 +26,7 @@ class AvailableGamesController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="available_games_new", methods={"GET","POST"})
+     * @Route("/nouveau", name="available_games_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -59,7 +59,7 @@ class AvailableGamesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="available_games_edit", methods={"GET","POST"})
+     * @Route("/{id}/modification", name="available_games_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, AvailableGames $availableGame): Response
     {

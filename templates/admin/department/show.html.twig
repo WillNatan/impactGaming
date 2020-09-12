@@ -1,0 +1,31 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails département{% endblock %}
+
+{% block body %}
+<div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Détails département</h6>
+            <a href="{{ path('department_index') }}" class=" ml-auto btn btn-info"><i class="fa fa-arrow-left"></i></a>
+            <a href="{{ path('department_edit', {'id': department.id}) }}" class="btn btn-warning ml-1"><i class="fa fa-edit"></i></a>
+            {{ include('admin/department/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+    <h1>Département</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom du département</th>
+                <td>{{ department.departmentName }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+    
+
+    
+
+    
+{% endblock %}

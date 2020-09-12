@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails plateforme
+{% endblock %}
+
+{% block body %}
+	<div class="card shadow mb-4">
+		<div class="card-header py-3 d-flex justify-content-between">
+			<h6 class="m-0 font-weight-bold text-primary">Détails Plateforme</h6>
+			<a href="{{ path('platform_index') }}" class=" ml-auto btn btn-info">
+				<i class="fa fa-arrow-left"></i>
+			</a>
+			<a href="{{ path('platform_edit', {'id': platform.id}) }}" class="btn btn-warning ml-1">
+				<i class="fa fa-edit"></i>
+			</a>
+			{{ include('admin/platform/_delete_form.html.twig') }}
+		</div>
+		<div class="card-body">
+
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>Nom de la plateforme</th>
+						<td>{{ platform.platformName }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+{% endblock %}

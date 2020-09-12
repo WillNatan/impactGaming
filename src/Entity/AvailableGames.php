@@ -37,6 +37,7 @@ class AvailableGames
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->searchEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
