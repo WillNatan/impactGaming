@@ -69,9 +69,9 @@
 					</span>
 					<hr>
 					<span>Organisateur:
-						{{ event.user.company ? event.user.company:event.user.firstName +' '+event.user.lastName  }}</span>
+						{{ event.user.company ? event.user.company ~ ' ' ~ '(' ~ event.organizer ~ ')'  :event.user.firstName +' '+event.user.lastName  }}</span>
 					<hr>
-					<span>Adresse:{{ event.address }}</span>
+					<span>Adresse:{{ event.address }}, {{ event.city }}, {{ event.department.departmentName }}, {{ event.cp }}</span>
 					{# <button class="button button-header mt-5">Être alerté</button> #}
 					<hr>
 					<div class="d-flex flex-row justify-content-center">
@@ -91,6 +91,22 @@
 							{% endif %}
 						{% endfor %}
 					</div>
+					<hr>
+				
+				
+				<h5>Jeux disponibles</h5>
+				<ul>
+					{% for game in event.availableGames %}
+						<li>{{ game.gameName }}</li>
+					{% endfor %}
+				</ul>
+				<hr>
+				<h5>Support(s)</h5>
+				<ul>
+					{% for support in event.support %}
+						<li>{{ support.platformName }}</li>
+					{% endfor %}
+				</ul>
 				</div>
 				<div class="col-md-8 text-center text-md-left">
 					<p>{{ event.longDesc }}</p>

@@ -166,10 +166,12 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					{{ form_label(form.shortDesc) }}
+					{{ form_errors(form.shortDesc) }}
 					{{ form_widget(form.shortDesc) }}
 				</div>
 				<div class="form-group">
 					{{ form_label(form.longDesc) }}
+					{{ form_errors(form.longDesc) }}
 					{{ form_widget(form.longDesc) }}
 				</div>
 			</div>
