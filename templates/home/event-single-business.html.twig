@@ -41,25 +41,36 @@
 				<p>{{ event.shortDesc }}</p>
 			</div>
 			<div class="col-md-6 justify-content-center">
-				<ul class="clockdiv text-center" id="clockdiv">
-					<li class="clockdiv-single clockdiv-day">
-						<h1 class="days">5</h1>
-						<span class="smalltext">Jours</span>
-					</li>
-					<li class="clockdiv-single clockdiv-hour">
-						<h1 class="hours"></h1>
-						<span class="smalltext">Heures</span>
-					</li>
-					<li class="clockdiv-single clockdiv-minute">
-						<h1 class="minutes">30</h1>
-						<span class="smalltext">Mins</span>
-					</li>
-				</ul>
+				{% if date().diff(event.launchDate).invert == 1 and date().diff(event.stopDate).invert == 0 %}
+                    <h2 class="text-center">Evènement en cours <i class="fa fa-check text-success"></i></h2>
+                    {# Si la date du jour est supérieure que la date de lancement de l'évènement et si la date du jour est supérieure à la date de fin #}
+                {% elseif date().diff(event.launchDate).invert == 1 and date().diff(event.stopDate).invert == 1 %}
+                    <h2 class="text-center">Evènement terminé <i class="fa fa-check text-success"></i></h2>
+                    {% else %}
+                    <ul class="clockdiv text-center" id="clockdiv">
+							<li class="clockdiv-single clockdiv-day">
+								<h1 class="days"></h1>
+								<span class="smalltext">Jours</span>
+							</li>
+							<li class="clockdiv-single clockdiv-hour">
+								<h1 class="hours"></h1>
+								<span class="smalltext">Heures</span>
+							</li>
+							<li class="clockdiv-single clockdiv-minute">
+								<h1 class="minutes"></h1>
+								<span class="smalltext">Minutes</span>
+							</li>
+						</ul>
+						<div class="clockdiv-content text-center">
+							<p class="h4 primary-text2 mb-2" id="launchDate" data-date="{{ event.launchDate|date('Y-m-d h:i:s') }}"></p>
+							
+						</div>
+                {% endif %}
 
 				<div class="clockdiv-content text-center">
 					<p class="h4 primary-text2 mb-2">{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 						-
-						{{ event.stopDate|format_datetime(pattern='d MMMM yyyy',locale='en') }}</p>
+						{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</p>
 				</div>
 			</div>
 		</div>

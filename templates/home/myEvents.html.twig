@@ -82,9 +82,9 @@
 											{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 											-
 											{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</span>
-										<p class="event-price text-center text-md-left">{{ event.price }}
-											€</p>
-											<p>Cashprize : {{ event.cashprize }} €</p>
+										<p class="event-price text-center text-md-left">{{ event.price != 0 ? event.price ~
+											"€" : "Gratuit" }}</p>
+											<p>Cashprize : {{ event.cashprize != 0 ? event.cashprize ~ "€" : "Aucun"}}</p>
 									</div>
 								</div>
 								{% if event.logo is not empty %}
