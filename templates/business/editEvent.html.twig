@@ -49,11 +49,22 @@
 				</div>
 			</div>
 			<div class="col-md-12">
+				
 				<div class="form-group">
+				{% if currentBanner %}
+					<img src="{{ asset('uploads/banners/'~ currentBanner) }}" id="current-banner" alt="Banniere actuelle" width="100">
+				{% else %}
+					<img src="{{ asset('img/default/defaultbanner.jpg') }}" id="current-banner" alt="Bannière actuelle" width="100">
+				{% endif %}
 					{{ form_label(form.banner) }}
 					{{ form_widget(form.banner) }}
 				</div>
 				<div class="form-group">
+				{% if currentLogo %}
+					<img src="{{ asset('uploads/logos/'~ currentLogo) }}" id="current-logo" alt="Logo actuel" width="100">
+				{% else %}
+					<img src="{{ asset('img/default/defaultlogo.png')}}" id="current-logo" alt="Logo actuel" width="100">
+				{% endif %}
 					{{ form_label(form.logo) }}
 					{{ form_widget(form.logo) }}
 				</div>
@@ -226,5 +237,37 @@ document.querySelector('.checked-button-tw').classList.add('d-none')
 document.querySelector('.twInput').value = defaultValueTw;
 }
 }
+
+function readURLBanner(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#current-banner').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
+
+$("#events_banner").change(function() {
+  readURLBanner(this);
+});
+
+function readURLLogo(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#current-logo').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
+
+$("#events_logo").change(function() {
+  readURLLogo(this);
+});
 	</script>
 {% endblock %}

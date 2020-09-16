@@ -3,20 +3,21 @@
 namespace App\Form;
 
 use App\Entity\Events;
+use App\Entity\Platform;
+use App\Entity\Department;
 use App\Entity\EventCategory;
 use App\Entity\AvailableGames;
-use App\Entity\Department;
-use App\Entity\Platform;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class EventsAdminType extends AbstractType
@@ -25,8 +26,36 @@ class EventsAdminType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label'=>"Nom de l'évènement",'attr'=>['class'=>'form-control']])
-            ->add('banner', FileType::class, ['required'=>false,'label'=>"Bannière (1920x1080)"])
-            ->add('logo', FileType::class, ['required'=>false,'label'=>"Logo (350x400)"])
+            ->add('banner', FileType::class, [
+                'required'=>false,
+                'label'=>"Bannière (1920x1080)",
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Le fichier doit être au format png ou jpg !',
+                    ])
+                ],
+                'data_class'=> null
+                ])
+            ->add('logo', FileType::class, [
+                'required'=>false,
+                'label'=>"Logo (350x400)",
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Le fichier doit être au format png ou jpg !',
+                    ])
+                ],
+                'data_class'=> null
+                ])
             ->add('websiteLink', TextType::class, ['label'=>"Lien du site web",'attr'=>['class'=>'form-control']])
             ->add('launchDate', DateTimeType::class, ['label'=>"Date de lancement",'widget'=>'single_text', 'attr'=>['class'=>'form-control']])
             ->add('stopDate', DateTimeType::class, ['label'=>"Date de fin",'widget'=>'single_text', 'attr'=>['class'=>'form-control']])

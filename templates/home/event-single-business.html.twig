@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<section class="hero-banner p-2">
+	{% if event.banner %}
+	<section class="hero-banner p-2" style="background:url('{{ asset('uploads/banners/'~ event.banner) }}')">
+	{% else %}
+		<section class="hero-banner p-2 bg-dark">
+	{% endif %}
 		<div class="container text-center">
 			<span class="hero-banner-icon">
-				<i class="fa fa-gamepad"></i>
+				{% if event.logo %}
+				<img src="{{ asset('uploads/logos/'~ event.logo) }}" width="100" alt="Logo evenement">
+				{% else %}
+					<i class="fa fa-gamepad"></i>
+				{% endif %}
 			</span>
 			<p>{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
 				-

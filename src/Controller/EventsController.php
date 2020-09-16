@@ -41,9 +41,7 @@ class EventsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $replaceSpace = str_replace(" ", "-", $event->getName());
-            $replaceComma = str_replace(',', '', $replaceSpace);
-            $event->setSlug($replaceComma);
+            $event->setSlug($event->slugify($event->getName()));
             $event->setUser($this->getUser());
 
             if (!is_null($form->get('fbUrl')->getData())) {
@@ -63,6 +61,38 @@ class EventsController extends AbstractController
                 $entityManager->persist($ss);
             }
 
+            $banner = $event->getBanner();
+            $logo = $event->getLogo();
+
+            if ($banner) {
+                $originalBannername = pathinfo($banner->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeBannername = $event->slugify($originalBannername);
+                $newBannername = $safeBannername.'-'.uniqid().'.'.$banner->guessExtension();
+
+                $banner->move(
+                    $this->getParameter('banners'),
+                    $newBannername
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setBanner($newBannername);
+            }
+
+            if ($logo) {
+                $originallogoname = pathinfo($logo->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safelogoname = $event->slugify($originallogoname);
+                $newlogoname = $safelogoname.'-'.uniqid().'.'.$logo->guessExtension();
+
+                $logo->move(
+                    $this->getParameter('logos'),
+                    $newlogoname
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setLogo($newlogoname);
+            }
             
             $entityManager->persist($event);
             $entityManager->flush();
@@ -73,6 +103,7 @@ class EventsController extends AbstractController
         return $this->render('admin/events/new.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            
         ]);
     }
 
@@ -87,12 +118,14 @@ class EventsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="events_edit", methods={"GET","POST"})
+     * @Route("/{id}/modification", name="events_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Events $event): Response
     {
+        $oldBanner = $event->getBanner();
+        $oldLogo = $event->getLogo();
 
-
+        $currentEventName = $event->getName();
         $form = $this->createForm(EventsAdminType::class, $event);
         $form->handleRequest($request);
 
@@ -151,10 +184,47 @@ class EventsController extends AbstractController
                 }
             }
             if ($event->getName() != $currentEventName) {
-                $replaceSpace = str_replace(" ", "-", $event->getName());
-                $replaceComma = str_replace(',', '', $replaceSpace);
-                $event->setSlug($replaceComma);
+                
+                $event->setSlug($event->slugify($event->getName()));
             }
+
+            $banner = $event->getBanner();
+            $logo = $event->getLogo();
+
+            if ($banner && $banner != $oldBanner) {
+                $originalBannername = pathinfo($banner->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeBannername = $event->slugify($originalBannername);
+                $newBannername = $safeBannername.'-'.uniqid().'.'.$banner->guessExtension();
+
+                $banner->move(
+                    $this->getParameter('banners'),
+                    $newBannername
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setBanner($newBannername);
+            }else{
+                $event->setBanner($oldBanner);
+            }
+
+            if ($logo && $banner != $oldLogo) {
+                $originallogoname = pathinfo($logo->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safelogoname = $event->slugify($originallogoname);
+                $newlogoname = $safelogoname.'-'.uniqid().'.'.$logo->guessExtension();
+
+                $logo->move(
+                    $this->getParameter('logos'),
+                    $newlogoname
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setLogo($newlogoname);
+            }else{
+                $event->setLogo($oldLogo);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('events_index');
@@ -163,6 +233,8 @@ class EventsController extends AbstractController
         return $this->render('admin/events/edit.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'currentLogo'=>$oldLogo,
+            'currentBanner'=>$oldBanner
         ]);
     }
 

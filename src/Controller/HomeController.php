@@ -42,9 +42,7 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $replaceSpace = str_replace(" ", "-", $event->getName());
-            $replaceComma = str_replace(',', '', $replaceSpace);
-            $event->setSlug($replaceComma);
+            $event->setSlug($event->slugify($event->getName()));
             $event->setUser($this->getUser());
 
             if (!is_null($form->get('fbUrl')->getData())) {
@@ -63,6 +61,40 @@ class HomeController extends AbstractController
                     ->setClass('fa-twitter');
                 $entityManager->persist($ss);
             }
+
+            $banner = $event->getBanner();
+            $logo = $event->getLogo();
+
+            if ($banner) {
+                $originalBannername = pathinfo($banner->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeBannername = $event->slugify($originalBannername);
+                $newBannername = $safeBannername.'-'.uniqid().'.'.$banner->guessExtension();
+
+                $banner->move(
+                    $this->getParameter('banners'),
+                    $newBannername
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setBanner($newBannername);
+            }
+
+            if ($logo) {
+                $originallogoname = pathinfo($logo->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safelogoname = $event->slugify($originallogoname);
+                $newlogoname = $safelogoname.'-'.uniqid().'.'.$logo->guessExtension();
+
+                $logo->move(
+                    $this->getParameter('logos'),
+                    $newlogoname
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setLogo($newlogoname);
+            }
+            
 
             $event->setOrganizer($this->getUser()->getFirstName().' '.$this->getUser()->getLastName());
             $entityManager->persist($event);
@@ -110,6 +142,9 @@ class HomeController extends AbstractController
      */
     public function myEventsBusinessEdit(Events $event, Request $request, SocialLinksRepository $socialLinksRepository)
     {
+        $oldBanner = $event->getBanner();
+        $oldLogo = $event->getLogo();
+
         $currentEventName = $event->getName();
         $form = $this->createForm(EventsType::class, $event);
         $form->handleRequest($request);
@@ -166,10 +201,47 @@ class HomeController extends AbstractController
                 }
             }
             if ($event->getName() != $currentEventName) {
-                $replaceSpace = str_replace(" ", "-", $event->getName());
-                $replaceComma = str_replace(',', '', $replaceSpace);
-                $event->setSlug($replaceComma);
+                
+                $event->setSlug($event->slugify($event->getName()));
             }
+
+            $banner = $event->getBanner();
+            $logo = $event->getLogo();
+
+            if ($banner && $banner != $oldBanner) {
+                $originalBannername = pathinfo($banner->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeBannername = $event->slugify($originalBannername);
+                $newBannername = $safeBannername.'-'.uniqid().'.'.$banner->guessExtension();
+
+                $banner->move(
+                    $this->getParameter('banners'),
+                    $newBannername
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setBanner($newBannername);
+            }else{
+                $event->setBanner($oldBanner);
+            }
+
+            if ($logo && $banner != $oldLogo) {
+                $originallogoname = pathinfo($logo->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safelogoname = $event->slugify($originallogoname);
+                $newlogoname = $safelogoname.'-'.uniqid().'.'.$logo->guessExtension();
+
+                $logo->move(
+                    $this->getParameter('logos'),
+                    $newlogoname
+                );
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $event->setLogo($newlogoname);
+            }else{
+                $event->setLogo($oldLogo);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('my_events_business', ['slug' => $event->getSlug()]);
@@ -178,6 +250,8 @@ class HomeController extends AbstractController
         return $this->render('business/editEvent.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'currentLogo'=>$oldLogo,
+            'currentBanner'=>$oldBanner
         ]);
     }
 

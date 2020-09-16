@@ -436,24 +436,24 @@ class Events
         return $this;
     }
 
-    public function getBanner(): ?string
+    public function getBanner()
     {
         return $this->banner;
     }
 
-    public function setBanner(string $banner): self
+    public function setBanner($banner): self
     {
         $this->banner = $banner;
 
         return $this;
     }
 
-    public function getLogo(): ?string
+    public function getLogo()
     {
         return $this->logo;
     }
 
-    public function setLogo(string $logo): self
+    public function setLogo($logo): self
     {
         $this->logo = $logo;
 
@@ -508,5 +508,17 @@ class Events
         $this->organizer = $organizer;
 
         return $this;
+    }
+
+    public function slugify($string, $delimiter = '-') {
+        $oldLocale = setlocale(LC_ALL, '0');
+        setlocale(LC_ALL, 'en_US.UTF-8');
+        $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+        $clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+        $clean = strtolower($clean);
+        $clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
+        $clean = trim($clean, $delimiter);
+        setlocale(LC_ALL, $oldLocale);
+        return $clean;
     }
 }

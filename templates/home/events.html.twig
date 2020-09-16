@@ -60,12 +60,17 @@
 									<div class="col-md-2">
 										<div class="event-img">
 											<a href="{{ path('single_event',{'slug':event.slug}) }}">
-												<img src="{{ asset('img/uploads/'~event.logo)}}" alt="Image evenement" class="img-fluid">
+												<img src="{{ asset('uploads/logos/'~event.logo)}}" alt="Logo evenement" class="img-fluid">
 											</a>
 										</div>
 									</div>
 								{% endif %}
-								<div class="col-md-9">
+								{% if event.logo is not empty %}
+								<div class="col-md-7">
+								{% else %}
+								<div class="col-md-8">
+								{% endif %}
+								
 									<div class="event-infos">
 										<a href="{{ path('single_event',{'slug':event.slug}) }}" class="text-center text-md-left">
 											<h1 class="event-title">{{ event.name }}</h1>
@@ -82,7 +87,11 @@
 											<p>Cashprize : {{ event.cashprize }} €</p>
 									</div>
 								</div>
+								{% if event.logo is not empty %}
 								<div class="col-md-1">
+								{% else %}
+								<div class="col-md-1 offset-md-1">
+									{% endif %}
 									<div class="event-links d-flex justify-content-md-center align-items-md-end flex-md-column">
 										{% for socialLink in event.socialLinks %}
 											<a href="{{ socialLink.url }}" class="d-flex align-items-center justify-content-center">

@@ -177,12 +177,22 @@
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
+					{% if currentBanner is defined %}
+					<img src="{{ asset('uploads/banners/'~ currentBanner) }}" id="current-banner" alt="Banniere actuelle" width="100">
+				{% else %}
+					<img src="{{ asset('img/default/defaultbanner.jpg') }}" id="current-banner" alt="Bannière actuelle" width="100">
+				{% endif %}
 					{{ form_label(form.banner) }}
 					{{ form_widget(form.banner) }}
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
+				{% if currentBanner is defined %}
+					<img src="{{ asset('uploads/logos/'~ currentLogo) }}" id="current-logo" alt="Logo actuel" width="100">
+				{% else %}
+					<img src="{{ asset('img/default/defaultlogo.png')}}" id="current-logo" alt="Logo actuel" width="100">
+				{% endif %}
 					{{ form_label(form.logo) }}
 					{{ form_widget(form.logo) }}
 				</div>
@@ -198,7 +208,7 @@
 	</a>
 </div>
 {{ form_end(form) }}
-
+<script src="{{ asset('vendors/jquery/jquery-3.2.1.min.js') }}"></script>
 <script>
 	document.querySelector('.fb-button').addEventListener("click", toggleFbInput);
 document.querySelector('.tw-button').addEventListener("click", toggleTwInput);
@@ -231,4 +241,36 @@ fetch(document.location.origin + this.dataset.path, {method: 'DELETE'}).then((re
 location.reload()
 })
 }
+
+function readURLBanner(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#current-banner').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
+
+$("#events_admin_banner").change(function() {
+  readURLBanner(this);
+});
+
+function readURLLogo(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#current-logo').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
+
+$("#events_admin_logo").change(function() {
+  readURLLogo(this);
+});
 </script>
