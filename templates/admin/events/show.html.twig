@@ -25,7 +25,7 @@
 					</span>
 					<hr>
 					<h4>Adresse</h4>
-					<span>{{ event.address }}, {{ event.city }}, {{ event.department.departmentName }}, {{ event.cp }}</span>
+					<span>Adresse: {{ event.address }}, {{ event.city }}, {{ event.department ? event.department.departmentName : "" }}, {{ event.cp }}</span>
 					<hr>
 					<h4>Date de lancement</h4>
 					<span>{{ event.launchDate ? event.launchDate|date('d/m/Y') : '' }}</span>

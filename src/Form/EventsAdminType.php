@@ -61,7 +61,7 @@ class EventsAdminType extends AbstractType
             ->add('stopDate', DateTimeType::class, ['label'=>"Date de fin",'widget'=>'single_text', 'attr'=>['class'=>'form-control']])
             ->add('shortDesc', TextareaType::class, ['label'=>"Description courte",'attr'=>['class'=>'form-control', 'cols'=>'40', 'rows'=>'5']])
             ->add('longDesc', TextareaType::class, ['label'=>"Description longue",'attr'=>['class'=>'form-control', 'cols'=>'40', 'rows'=>'20']])
-            ->add('address', TextType::class, ['label'=>"Adresse",'attr'=>['class'=>'form-control']])
+            ->add('address', TextType::class, ['label'=>"Rue",'attr'=>['class'=>'form-control']])
             ->add('city', TextType::class, ['label'=>"Ville",'attr'=>['class'=>'form-control']])
             ->add('cp', TextType::class, ['label'=>"Code Postal",'attr'=>['class'=>'form-control']])
             ->add('organizer', TextType::class, ['label'=>'Organisateur','attr'=>['class'=>'form-control']])

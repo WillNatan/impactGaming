@@ -87,7 +87,7 @@
 				<span>Organisateur:
 					{{ event.user.company ? event.user.company ~ ' ' ~ '(' ~ event.organizer ~ ')'  :event.user.firstName +' '+event.user.lastName  }}</span>
 				<hr>
-				<span>Adresse:{{ event.address }}, {{ event.city }}, {{ event.department.departmentName }}, {{ event.cp }}</span>
+				<span>Adresse: {{ event.address }}, {{ event.city }}, {{ event.department ? event.department.departmentName : "" }}, {{ event.cp }}</span>
 				{# <button class="button button-header mt-5">Être alerté</button> #}
 				<hr>
 				
