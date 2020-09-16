@@ -48,7 +48,7 @@
 			</div>
 			<div class="col-md-12">
 				<div class="form-group">
-				{% if currentBanner %}
+				{% if currentBanner is defined %}
 					<img src="{{ asset('uploads/banners/'~ currentBanner) }}" id="current-banner" alt="Banniere actuelle" width="100">
 				{% else %}
 					<img src="{{ asset('img/default/defaultbanner.jpg') }}" id="current-banner" alt="Bannière actuelle" width="100">
@@ -57,7 +57,7 @@
 					{{ form_widget(form.banner) }}
 				</div>
 				<div class="form-group">
-				{% if currentLogo %}
+				{% if currentLogo is defined %}
 					<img src="{{ asset('uploads/logos/'~ currentLogo) }}" id="current-logo" alt="Logo actuel" width="100">
 				{% else %}
 					<img src="{{ asset('img/default/defaultlogo.png')}}" id="current-logo" alt="Logo actuel" width="100">
@@ -201,5 +201,10 @@ function readURLLogo(input) {
 $("#events_logo").change(function() {
   readURLLogo(this);
 });
+
+$("#events_launchDate_date").addClass('form-control')
+$("#events_launchDate_time").addClass('form-control')
+$("#events_stopDate_date").addClass('form-control')
+$("#events_stopDate_time").addClass('form-control')
 	</script>
 {% endblock %}

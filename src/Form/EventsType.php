@@ -57,8 +57,8 @@ class EventsType extends AbstractType
                 'data_class'=> null
                 ])
             ->add('websiteLink', TextType::class, ['label'=>"Lien du site web",'attr'=>['class'=>'form-control']])
-            ->add('launchDate', DateTimeType::class, ['label'=>"Date de lancement"])
-            ->add('stopDate', DateTimeType::class, ['label'=>"Date de fin"])
+            ->add('launchDate', DateTimeType::class, ['label'=>"Date de lancement", 'date_widget'=>"single_text", 'time_widget'=>"single_text"])
+            ->add('stopDate', DateTimeType::class, ['label'=>"Date de fin",  'date_widget'=>"single_text", 'time_widget'=>"single_text"])
             ->add('shortDesc', TextareaType::class, ['label'=>"Description courte",'attr'=>['class'=>'form-control', 'cols'=>'40', 'rows'=>'5']])
             ->add('longDesc', TextareaType::class, ['label'=>"Description longue",'attr'=>['class'=>'form-control', 'cols'=>'40', 'rows'=>'20']])
             ->add('address', TextType::class, ['label'=>"Rue",'attr'=>['class'=>'form-control']])
