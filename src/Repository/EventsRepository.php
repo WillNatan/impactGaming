@@ -27,7 +27,7 @@ class EventsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e')
-            ->orderBy('e.launchDate', 'ASC')
+            ->addOrderBy('e.launchDate', 'ASC')
             ->getQuery()
             ->getResult()
         ;
@@ -47,7 +47,7 @@ class EventsRepository extends ServiceEntityRepository
             ->select('e')
             ->where('e.user = :user')
             ->setParameter('user',$user)
-            ->orderBy('e.launchDate', 'ASC')
+            ->addOrderBy('e.launchDate', 'ASC')
             ->getQuery()
             ->getResult()
         ;
