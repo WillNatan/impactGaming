@@ -67,7 +67,7 @@ stopOnFocus: true
 										</p>
 									</div>
 								</div>
-								<div class="col-md-7 p-2">
+								<div class="col-md-7">
 									<h4>{{ event.name }}</h4>
 									<p class="text-dark">{{ event.shortDesc|slice(0, 130) }}...</p>
 								</div>
@@ -77,11 +77,11 @@ stopOnFocus: true
 					{% endfor %}
 					{% if is_granted('ROLE_BUSINESS') == true %}
 						<div class="d-flex justify-content-between flex-wrap mt-3">
-							<a href="{{ path('my_events') }}">
-								<button class="button button-header">Voir tous mes évènements</button>
+							<a href="{{ path('my_events') }}" class="w-100">
+								<button class="button button-header w-100">Voir tous mes évènements</button>
 							</a>
-							<a href="{{ path('events_business_new') }}">
-								<button class="button button-header">Ajouter un évènement</button>
+							<a href="{{ path('events_business_new') }}" class="w-100 mt-1 mt-md-0">
+								<button class="button button-header w-100">Ajouter un évènement</button>
 							</a>
 						</div>
 					{% endif %}
