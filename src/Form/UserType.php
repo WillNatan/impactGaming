@@ -24,10 +24,10 @@ class UserType extends AbstractType
             'attr'=>['class'=>'form-control'],
             'multiple'=>true
             ])
-            ->add('password', PasswordType::class, ['label'=>'Mot de passe','attr'=>['class'=>'form-control']])
+            ->add('plainPassword', PasswordType::class, ['mapped'=>false, 'empty_data' => '','required'=>false, 'label'=>'Mot de passe','attr'=>['class'=>'form-control']])
             ->add('firstName', TextType::class, ['label'=>'Prénom', 'attr'=>['class'=>'form-control']])
             ->add('lastName', TextType::class, ['label'=>'Nom', 'attr'=>['class'=>'form-control']])
-            ->add('Company', TextType::class, ['label'=>'Compagnie', 'attr'=>['class'=>'form-control']])
+            ->add('Company', TextType::class, ['required'=>false, 'label'=>'Compagnie', 'attr'=>['class'=>'form-control']])
         ;
     }
 

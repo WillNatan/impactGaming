@@ -72,20 +72,34 @@
 								{% endif %}
 								
 									<div class="event-infos">
-										<a href="{{ path('my_events_business',{'slug':event.slug}) }}" class="text-center text-md-left">
-											<h1 class="event-title">{{ event.name }}</h1>
-										</a>
-										<span class="event-place text-center text-md-left">
-											<i class="fa fa-map-marker-alt"></i>
-											{{ event.city }}
-											-
-											{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
-											-
-											{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</span>
-										<p class="event-price text-center text-md-left">{{ event.price != 0 ? event.price ~
-											"€" : "Gratuit" }}</p>
-											<p>Cashprize : {{ event.cashprize != 0 ? event.cashprize ~ "€" : "Aucun"}}</p>
-									</div>
+											<a href="{{ path('my_events_business',{'slug':event.slug}) }}" class="text-center text-md-left">
+												<h1 class="event-title">{{ event.name }}</h1>
+											</a>
+											<div class="minimal-infos-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-map-marker-alt"></i>
+												</div>
+												<span>{{ event.city }}
+												-
+												{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
+												-
+												{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</span>
+											</div>
+											<div class="ticket-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-ticket-alt"></i>
+												</div>
+												<span>{{ event.price != 0 ? event.price ~" €" : "Gratuit" }}</span>
+											</div>
+											<div class="cashprize-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-award"></i>
+												</div>
+												<span>
+													{{ event.cashprize != 0 ? event.cashprize ~ " €" : "Aucun"}}</span>
+											</div>
+
+										</div>
 								</div>
 								{% if event.logo is not empty %}
 								<div class="col-md-1">

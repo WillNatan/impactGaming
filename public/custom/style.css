@@ -7,13 +7,13 @@
 .event-card {
   position: relative;
   margin-top: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   background: #fff;
   border-radius: 2px;
 }
 
 .event-card .event-date {
-  background: #b6454e;  /* fallback for old browsers */
+  background: #cc555f;  /* fallback for old browsers */
 
   text-align: center;
   display: flex;
@@ -113,4 +113,79 @@ background: linear-gradient(to right, #f7f7f7, #ffffff)!important; /* W3C, IE 10
 
 .ad-banner + .ad-banner{
   margin-top:15px;
+}
+
+.rounded-icon{
+  background-color: white;
+  padding: 15px;
+  border-radius: 50%;
+  width:35px;
+  height:35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.rounded-icon.primary-icon{
+  color: #cc555f;
+}
+
+.cashprize-container{
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cashprize-container span{
+  margin-left:1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.ticket-container{
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.ticket-container span{
+  margin-left:1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.minimal-infos-container{
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-top:1rem;
+}
+
+.minimal-infos-container span{
+  margin-left:1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.profile-event-infos{
+  padding:10px;
+}
+
+.rounded-icon.big-icon{
+  font-size: 6rem;
+  width: 10rem;
+  height: 10rem;
+}
+
+.card-body .info{
+  margin:2rem 0;
+
+}
+
+.card-body .icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

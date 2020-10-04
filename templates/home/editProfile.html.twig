@@ -14,18 +14,40 @@
 							{{ form_widget(form.email) }}
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							{{ form_label(form.firstName) }}
-							{{ form_widget(form.firstName) }}
+					{% if is_granted('ROLE_BUSINESS') %}
+						<div class="col-md-4">
+							<div class="form-group">
+								{{ form_label(form.firstName) }}
+								{{ form_widget(form.firstName) }}
+							</div>
 						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							{{ form_label(form.lastName) }}
-							{{ form_widget(form.lastName) }}
+						<div class="col-md-4">
+							<div class="form-group">
+								{{ form_label(form.lastName) }}
+								{{ form_widget(form.lastName) }}
+							</div>
 						</div>
-					</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								{{ form_label(form.company) }}
+								{{ form_widget(form.company) }}
+							</div>
+						</div>
+					{% else %}
+						<div class="col-md-6">
+							<div class="form-group">
+								{{ form_label(form.firstName) }}
+								{{ form_widget(form.firstName) }}
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								{{ form_label(form.lastName) }}
+								{{ form_widget(form.lastName) }}
+							</div>
+						</div>
+					{% endif %}
+
 					<div class="col-md-12">
 						<h4 class="text-center">Mot de passe</h4>
 					</div>
@@ -37,14 +59,14 @@
 								<div id="errorPassword" data-error="{{ errorPassword }}"></div>
 								<script>
 									Toastify({
-										text: document.querySelector('#errorPassword').dataset.error, 
-										duration: 10000,
-										close: true,
-										gravity : "bottom",
-										position: "left",
-										backgroundColor: "linear-gradient(to right, #CB356B, #BD3F32)",
-										stopOnFocus: true
-										}).showToast();
+text: document.querySelector('#errorPassword').dataset.error,
+duration: 10000,
+close: true,
+gravity: "bottom",
+position: "left",
+backgroundColor: "linear-gradient(to right, #CB356B, #BD3F32)",
+stopOnFocus: true
+}).showToast();
 								</script>
 							{% endfor %}
 						</div>
@@ -54,18 +76,18 @@
 							{{form_label(form.newPassword)}}
 							{{form_widget(form.newPassword)}}
 							{% for newPasswordError in app.flashes('newPasswordError') %}
-								
+
 								<div id="errorPassword" data-error="{{ newPasswordError }}"></div>
 								<script>
 									Toastify({
-										text: document.querySelector('#errorPassword').dataset.error, 
-										duration: 3000,
-										close: true,
-										gravity : "bottom",
-										position: "left",
-										backgroundColor: "linear-gradient(to right, #CB356B, #BD3F32)",
-										stopOnFocus: true
-										}).showToast();
+text: document.querySelector('#errorPassword').dataset.error,
+duration: 3000,
+close: true,
+gravity: "bottom",
+position: "left",
+backgroundColor: "linear-gradient(to right, #CB356B, #BD3F32)",
+stopOnFocus: true
+}).showToast();
 								</script>
 							{% endfor %}
 						</div>
@@ -73,7 +95,9 @@
 					<div class="col-md-12">
 						<div class="form-group text-center">
 							<button type="submit" class="btn btn-success">Modifier</button>
-							<a href="{{ path('profile') }}"><button type="button" class="btn btn-info">Retour à mon profil</button></a>
+							<a href="{{ path('profile') }}">
+								<button type="button" class="btn btn-info">Retour à mon profil</button>
+							</a>
 						</div>
 					</div>
 					{{ form_end(form) }}

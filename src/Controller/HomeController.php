@@ -7,6 +7,7 @@ use App\Entity\SearchEvent;
 use App\Form\EventsType;
 use App\Form\EditUserType;
 use App\Entity\SocialLinks;
+use App\Form\EditUserBusinessType;
 use App\Form\SearchEventType;
 use App\Repository\EventsRepository;
 use App\Repository\SocialLinksRepository;
@@ -313,7 +314,11 @@ class HomeController extends AbstractController
 
         $user = $this->getUser();
 
-        $form = $this->createForm(EditUserType::class, $user);
+        if($this->container->get('security.authorization_checker')->isGranted('ROLE_BUSINESS')) {
+            $form = $this->createForm(EditUserBusinessType::class, $user);
+        }else{
+            $form = $this->createForm(EditUserType::class, $user);
+        }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

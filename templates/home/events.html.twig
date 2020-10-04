@@ -7,43 +7,43 @@
 	<div class="custom-bg">
 		<div class="container-fluid pt-5">
 			<div class="row">
-				<div class="col-md-2">
-					
-				</div>
+				<div class="col-md-2"></div>
 				<div class="col-md-8">
-				<h4>Filtrer les evènements</h4>
+					<h4>Filtrer les evènements</h4>
 					<div class="row ">
 						<div class="col-md-12">
 							{{ form_start(form) }}
 							<div class="row">
-							<div class="col-md-6">
-								{{ form_label(form.category) }}
-								{{ form_widget(form.category) }}
-							</div>
-							<div class="col-md-4">
-								{{ form_label(form.price) }}
-								{{ form_widget(form.price) }}
-							</div>
-							<div class="col-md-2">
-								{{ form_label(form.support) }}
-								{{ form_widget(form.support) }}
-							</div>
-							<div class="col-md-4">
-								{{ form_label(form.game) }}
-								{{ form_widget(form.game) }}
-							</div>
-							<div class="col-md-4">
-								{{ form_label(form.department) }}
-								{{ form_widget(form.department) }}
-							</div>
-							<div class="col-md-2 ">
-								<label for="">&nbsp;</label>
-								<button class="btn btn-info d-block"><i class="fa fa-search"></i></button>
-							</div>
+								<div class="col-md-6">
+									{{ form_label(form.category) }}
+									{{ form_widget(form.category) }}
+								</div>
+								<div class="col-md-4">
+									{{ form_label(form.price) }}
+									{{ form_widget(form.price) }}
+								</div>
+								<div class="col-md-2">
+									{{ form_label(form.support) }}
+									{{ form_widget(form.support) }}
+								</div>
+								<div class="col-md-4">
+									{{ form_label(form.game) }}
+									{{ form_widget(form.game) }}
+								</div>
+								<div class="col-md-4">
+									{{ form_label(form.department) }}
+									{{ form_widget(form.department) }}
+								</div>
+								<div class="col-md-2 ">
+									<label for="">&nbsp;</label>
+									<button class="btn btn-info d-block">
+										<i class="fa fa-search"></i>
+									</button>
+								</div>
 							</div>
 							{{ form_end(form) }}
 						</div>
-						
+
 					</div>
 					<h1>Evènements</h1>
 
@@ -66,54 +66,66 @@
 									</div>
 								{% endif %}
 								{% if event.logo is not empty %}
-								<div class="col-md-7">
-								{% else %}
-								<div class="col-md-8">
-								{% endif %}
-								
-									<div class="event-infos">
-										<a href="{{ path('single_event',{'slug':event.slug}) }}" class="text-center text-md-left">
-											<h1 class="event-title">{{ event.name }}</h1>
-										</a>
-										<span class="event-place text-center text-md-left">
-											<i class="fa fa-map-marker-alt"></i>
-											{{ event.city }}
-											-
-											{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
-											-
-											{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</span>
-										<p class="event-price text-center text-md-left">{{ event.price != 0 ? event.price ~
-											"€" : "Gratuit" }}</p>
-											<p>Cashprize : {{ event.cashprize != 0 ? event.cashprize ~ "€" : "Aucun"}}</p>
-									</div>
-								</div>
-								{% if event.logo is not empty %}
-								<div class="col-md-1">
-								{% else %}
-								<div class="col-md-1 offset-md-1">
-									{% endif %}
-									<div class="event-links d-flex justify-content-md-center align-items-md-end flex-md-column">
-										{% for socialLink in event.socialLinks %}
-											<a href="{{ socialLink.url }}" class="d-flex align-items-center justify-content-center">
-												<i class="fab {{ socialLink.class }} fa-2x"></i>
+									<div class="col-md-7">
+									{% else %}
+										<div class="col-md-8">
+										{% endif %}
+
+										<div class="event-infos">
+											<a href="{{ path('single_event',{'slug':event.slug}) }}" class="text-center text-md-left">
+												<h1 class="event-title">{{ event.name }}</h1>
 											</a>
-										{% endfor %}
+											<div class="minimal-infos-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-map-marker-alt"></i>
+												</div>
+												<span>{{ event.city }}
+												-
+												{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
+												-
+												{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</span>
+											</div>
+											<div class="ticket-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-ticket-alt"></i>
+												</div>
+												<span>{{ event.price != 0 ? event.price ~" €" : "Gratuit" }}</span>
+											</div>
+											<div class="cashprize-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-award"></i>
+												</div>
+												<span>
+													{{ event.cashprize != 0 ? event.cashprize ~ " €" : "Aucun"}}</span>
+											</div>
+
+										</div>
 									</div>
-								</div>
+									{% if event.logo is not empty %}
+										<div class="col-md-1">
+										{% else %}
+											<div class="col-md-1 offset-md-1">
+											{% endif %}
+											<div class="event-links d-flex justify-content-md-center align-items-md-end flex-md-column">
+												{% for socialLink in event.socialLinks %}
+													<a href="{{ socialLink.url }}" class="d-flex align-items-center justify-content-center">
+														<i class="fab {{ socialLink.class }} fa-2x"></i>
+													</a>
+												{% endfor %}
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+								{{ knp_pagination_render(events, 'home/pagination.html.twig') }}
+
 							</div>
-						{% endfor %}
-						{{ knp_pagination_render(events, 'home/pagination.html.twig') }}
+						</div>
+
+						<div class="col-md-2"></div>
 
 					</div>
 				</div>
 
-				<div class="col-md-2">
-					
-				</div>
 
 			</div>
-		</div>
-
-
-	</div>
-{% endblock %}
+		{% endblock %}

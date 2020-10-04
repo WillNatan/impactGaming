@@ -34,59 +34,97 @@ stopOnFocus: true
 			<h1 class="text-center">Mon compte</h1>
 			<div class="row mt-5">
 				<div class="col-md-6">
-					<div class="card ">
-						<div class="card-body">
-							<span class="text-gray">Adresse Email</span>
-							<h4>{{ app.user.email }}</p>
-						</div>
-						<div class="card-body">
-							<span class="text-gray">Nom</span>
-							<h4>{{ app.user.lastName }}</p>
-						</div>
-						<div class="card-body">
-							<span class="text-gray">Prénom</span>
-							<h4>{{ app.user.firstName }}</p>
-						</div>
-						<div class="card-body text-center">
-							<a href="{{ path('editProfile') }}">
-								<button class="btn btn-info">Modifier mon compte</button>
-							</a>
+					<div class="card">
+						<div class="card-body d-flex flex-column text-center">
+							<div class="icon">
+								<div class="rounded-icon big-icon">
+								<i class="fa fa-user"></i>
+							</div>
+							</div>
+							<div class="info">
+								<span class="text-gray">Adresse email</span>
+							<h4>{{ app.user.email }}</h4>
+							<hr>
+							</div>
+							<div class="info">
+								<div class="row text-center">
+								<div class="col-md-6">
+									<span class="text-gray">Nom</span>
+									<h4>{{ app.user.firstName }}</h4>
+								</div>
+								<div class="col-md-6">
+									<span class="text-gray">Prénom</span>
+									<h4>{{ app.user.lastName }}</h4>
+								</div>
+							</div>
+							<hr>
+							</div>
+							<div class="info">
+							{% if app.user.company %}
+								<span class="text-gray">Société</span>
+									<h4>{{ app.user.company }}</h4>
+							{% endif %}
+							</div>
+							<div class="info">
+								<a href="{{ path('editProfile') }}" class="button button-header">Modifier mon compte</a>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<h4>Mes évènements</h4>
+					<h2>Mes évènements</h2>
 
-					{% for event in events %}
-						<a href="{{ path('single_event', {'slug':event.slug}) }}">
-							<div class="event-card">
-							<div class="row">
-								<div class="col-md-4 ">
+					<div class="event-container">
+						
+							{% for event in events %}
+							<div class="event-card row no-gutters">
+							<div class="col-md-12">
 									<div class="event-date h-100">
-										<p class="event-day">{{ event.launchDate|date('d') }}<br/><span class="month">{{ event.launchDate|format_datetime(pattern='MMM',locale='en') }}</span>
+										<p class="event-day">{{ event.launchDate|date('d') }}<br/><span class="month">{{ event.launchDate|format_datetime(pattern='MMM') }}</span>
 										</p>
 									</div>
 								</div>
-								<div class="col-md-7">
-									<h4>{{ event.name }}</h4>
-									<p class="text-dark">{{ event.shortDesc|slice(0, 130) }}...</p>
+								<div class="col-md-12">
+									<div class="event-infos">
+											<a href="{{ path('single_event',{'slug':event.slug}) }}" class="text-center text-md-left">
+												<h1 class="event-title">{{ event.name }}</h1>
+											</a>
+											<div class="minimal-infos-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-map-marker-alt"></i>
+												</div>
+												<span>{{ event.city }}
+												-
+												{{ event.launchDate|format_datetime(pattern='d MMMM yyyy') }}
+												-
+												{{ event.stopDate|format_datetime(pattern='d MMMM yyyy') }}</span>
+											</div>
+											<div class="ticket-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-ticket-alt"></i>
+												</div>
+												<span>{{ event.price != 0 ? event.price ~" €" : "Gratuit" }}</span>
+											</div>
+											<div class="cashprize-container">
+												<div class="rounded-icon primary-icon">
+													<i class="fa fa-award"></i>
+												</div>
+												<span>
+													{{ event.cashprize != 0 ? event.cashprize ~ " €" : "Aucun"}}</span>
+											</div>
+
+										</div>
 								</div>
+								</div>
+							{% endfor %}
+							<div class="d-flex justify-content-center align-items-center flex-column mt-1">
+								<a href="{{ path('events_business_new') }}" class="button button-header w-100 text-center">Ajouter un évènement</a>
+							<a href="{{ path('my_events') }}" class="button button-header w-100 mt-1 text-center">Voir tous mes évènements</a>
 							</div>
-						</div>
-						</a>
-					{% endfor %}
-					{% if is_granted('ROLE_BUSINESS') == true %}
-						<div class="d-flex justify-content-between flex-wrap mt-3">
-							<a href="{{ path('my_events') }}" class="w-100">
-								<button class="button button-header w-100">Voir tous mes évènements</button>
-							</a>
-							<a href="{{ path('events_business_new') }}" class="w-100 mt-1 mt-md-0">
-								<button class="button button-header w-100">Ajouter un évènement</button>
-							</a>
-						</div>
-					{% endif %}
+						
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-{% endblock %}
+
+		</section>
+	{% endblock %}
