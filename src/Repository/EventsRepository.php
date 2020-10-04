@@ -28,6 +28,8 @@ class EventsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->select('e')
             ->addOrderBy('e.launchDate', 'ASC')
+            ->where('e.launchDate >= :datenow')
+            ->setParameter('datenow',new \DateTime('now'))
             ->getQuery()
             ->getResult()
         ;
@@ -35,10 +37,14 @@ class EventsRepository extends ServiceEntityRepository
 
     public function findAllEventsQuery()
     {
-        return $this->createQueryBuilder('e')
+        $qb = $this->createQueryBuilder('e')
             ->select('e')
             ->addOrderBy('e.launchDate', 'ASC')
+            ->where('e.launchDate >= :datenow')
+            ->setParameter('datenow',new \DateTime('now'))
         ;
+
+        return $qb;
     }
 
     public function findByUser($user)
@@ -48,6 +54,8 @@ class EventsRepository extends ServiceEntityRepository
             ->where('e.user = :user')
             ->setParameter('user',$user)
             ->addOrderBy('e.launchDate', 'ASC')
+            ->andWhere('e.launchDate >= :datenow')
+            ->setParameter('datenow',new \DateTime('now'))
             ->getQuery()
             ->getResult()
         ;
@@ -60,6 +68,8 @@ class EventsRepository extends ServiceEntityRepository
             ->where('e.user = :user')
             ->setParameter('user',$user)
             ->addOrderBy('e.launchDate','ASC')
+            ->andWhere('e.launchDate >= :datenow')
+            ->setParameter('datenow',new \DateTime('now'))
         ;
     }
 
