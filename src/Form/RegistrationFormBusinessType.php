@@ -20,10 +20,10 @@ class RegistrationFormBusinessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("firstName", TextType::class, ['attr'=>['class'=>'form-control']])
-            ->add("company", TextType::class, ['attr'=>['class'=>'form-control']])
-            ->add("lastName", TextType::class, ['attr'=>['class'=>'form-control']])
-            ->add('email', EmailType::class, ['attr'=>['class'=>'form-control']])
+            ->add("firstName", TextType::class, ['label' => 'Prénom', 'attr'=>['class'=>'form-control']])
+            ->add("company", TextType::class, ['label' => 'Société','attr'=>['class'=>'form-control']])
+            ->add("lastName", TextType::class,  ['label' => 'Nom de famille','attr'=>['class'=>'form-control']])
+            ->add('email', EmailType::class, ['label' => 'Adresse Email','attr'=>['class'=>'form-control']])
             ->add('captcha', Recaptcha3Type::class, [
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'homepage'

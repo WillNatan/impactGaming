@@ -5,9 +5,11 @@
     min-height: 100vh;
 }
 
-.middle-form form{
+.middle-form-container{
+    max-width: 1500px;
     background-color: white;
-    max-width: 500px;
+    padding:2rem;
+    border-radius: 1.5rem;
 }
 
 .banner-bg{

@@ -15,6 +15,7 @@
 
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/middle-form.css') }}">
+		<link rel="stylesheet" href="{{ asset('custom/register.css') }}">
 	</head>
 
 	<body class="banner-bg">
@@ -26,53 +27,84 @@
 					<div class="alert alert-danger" role="alert">{{ flashError }}</div>
 				{% endfor %}
 
-				{{ form_start(registrationForm, {attr: {'class':'p-3 shadow-lg row'}}) }}
+				<div class="middle-form-container">
+					<div class="row">
+						<div class="col-12 text-center">
+							<h1>Inscription</h1>
+						</div>
+						<div class="col-12">
+							<div class="row">
+								<div class="col-md-6 text-center">
+									<h2>Devenir organisateur ?</h2>
+									{{ form_start(businessForm) }}
+									<div class="row">
+										<div class="col-md-6">
+											{{ form_label(businessForm.firstName) }}
+											{{ form_widget(businessForm.firstName) }}
+										</div>
+										<div class="col-md-6">
+											{{ form_label(businessForm.lastName) }}
+											{{ form_widget(businessForm.lastName) }}
+										</div>
+										<div class="col-md-12">
+											{{ form_label(businessForm.company) }}
+											{{ form_widget(businessForm.company) }}
+										</div>
+										<div class="col-md-12">
+											{{ form_label(businessForm.email) }}
+											{{ form_widget(businessForm.email) }}
+										</div>
+										<div class="col-md-12">
+											{{ form_label(businessForm.plainPassword.first) }}
+											{{ form_widget(businessForm.plainPassword.first) }}
+										</div>
+										<div class="col-md-12">
+											{{ form_label(businessForm.plainPassword.second) }}
+											{{ form_widget(businessForm.plainPassword.second) }}
+										</div>
+										<div class="col-md-12">
+												<button class="button button-header mt-1" type="submit">Inscription</button>
+											</div>
+									</div>
+									{{ form_end(businessForm) }}
+								</div>
+								<div class="col-md-6 text-center">
+									<h2>Créer mon compte</h2>
+									{{ form_start(registrationForm) }}
+									<div class="row">
+										<div class="col">
+											<div class="col-md-12">
+												{{ form_label(registrationForm.firstName) }}
+												{{ form_widget(registrationForm.firstName) }}
+											</div>
+											<div class="col-md-12">
+												{{ form_label(registrationForm.lastName) }}
+												{{ form_widget(registrationForm.lastName) }}
+											</div>
+											<div class="col-md-12">
+												{{ form_label(registrationForm.email) }}
+												{{ form_widget(registrationForm.email) }}
+											</div>
+											<div class="col-md-12">
+												{{ form_label(registrationForm.plainPassword.first) }}
+												{{ form_widget(registrationForm.plainPassword.first) }}
+											</div>
+											<div class="col-md-12">
+												{{ form_label(registrationForm.plainPassword.second) }}
+												{{ form_widget(registrationForm.plainPassword.second) }}
+											</div>
+											<div class="col-md-12">
+												<button class="button button-header mt-1" type="submit">Inscription</button>
+											</div>
+										</div>
+									</div>
+									{{ form_end(registrationForm) }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-				<div class="col-12 text-center">
-					<h1>Inscription</h1>
-				</div>
-				<div class="col-6">
-					<div class="form-group">
-						{{ form_label(registrationForm.lastName) }}
-						{{ form_widget(registrationForm.lastName) }}
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="form-group">
-						{{ form_label(registrationForm.firstName) }}
-						{{ form_widget(registrationForm.firstName) }}
-					</div>
-				</div>
-				<div class="col-12">
-					<div class="form-group">
-
-						{{ form_label(registrationForm.email) }}
-						<div class="text-danger">
-							{{ form_errors(registrationForm.email) }}
-						</div>
-						{{ form_widget(registrationForm.email) }}
-					</div>
-					<div class="form-group">
-						{{ form_label(registrationForm.plainPassword.first) }}
-						<div class="text-danger">
-							{{ form_errors(registrationForm.plainPassword.first) }}
-						</div>
-						{{ form_widget(registrationForm.plainPassword.first) }}
-					</div>
-					<div class="form-group">
-						{{ form_label(registrationForm.plainPassword.second) }}
-						<div class="text-danger">
-							{{ form_errors(registrationForm.plainPassword.second) }}
-						</div>
-						{{ form_widget(registrationForm.plainPassword.second) }}
-					</div>
-					<div class="form-group text-center d-flex justify-content-center  flex-column">
-						<button type="submit" class="btn btn-success">Créer mon compte</button>
-						<a href="{{ path('home') }}" class="btn btn-link">Retour à l'accueil</a>
-						<a href="{{ path('app_login') }}" class="btn btn-link">J'ai déjà un compte</a>
-					</div>
-				</div>
-				{{ form_end(registrationForm) }}
 			</div>
 		</div>
 
