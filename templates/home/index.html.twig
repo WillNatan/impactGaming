@@ -29,10 +29,10 @@
                
                 
                 {% if date().diff(lastEvent.launchDate).invert == 1 and date().diff(lastEvent.stopDate).invert == 0 %}
-                    <h2>Evènement en cours <i class="fa fa-check text-success"></i></h2>
+                    <h2 class="text-center">Evènement en cours <i class="fa fa-check text-success"></i></h2>
                     {# Si la date du jour est supérieure que la date de lancement de l'évènement et si la date du jour est supérieure à la date de fin #}
                 {% elseif date().diff(lastEvent.launchDate).invert == 1 and date().diff(lastEvent.stopDate).invert == 1 %}
-                    <h2>Evènement terminé <i class="fa fa-check text-success"></i></h2>
+                    <h2 class="text-center">Evènement terminé <i class="fa fa-check text-success"></i></h2>
                     {% else %}
                     <ul class="clockdiv text-center" id="clockdiv">
 							<li class="clockdiv-single clockdiv-day">
@@ -334,35 +334,43 @@
 {% block javascripts %}
 
 	<script>
+		function getTimeRemaining(endtime) {
+var t = Date.parse(new Date(endtime)) - Date.parse(new Date());
+// var seconds = Math.floor((t / 1000) % 60);
+var minutes = Math.floor((t / 1000 / 60) % 60);
+var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+var days = Math.floor(t / (1000 * 3600 * 24));
+return {
+'total': t, 'days': days, 'hours': hours, 'minutes': minutes
+// 'seconds': seconds
+};
+}
 
-
-
-// Set the date we're counting down to
-var countDownDate = new Date(document.getElementById('launchDate').dataset.date).getTime();
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get today's date and time
-  var now = new Date().getTime();
-
-  // Find the distance between now and the count down date
-  var distance = now - countDownDate;
-
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-  // Display the result in the element with id="demo"
-  var clock = document.getElementById('clockdiv');
-  var daysSpan = clock.querySelector('.days');
+function initializeClock(id, endtime) {
+var clock = document.getElementById(id);
+var daysSpan = clock.querySelector('.days');
 var hoursSpan = clock.querySelector('.hours');
 var minutesSpan = clock.querySelector('.minutes');
+// var secondsSpan = clock.querySelector('.seconds');
 
-daysSpan.innerHTML = days;
-hoursSpan.innerHTML = hours;
-minutesSpan.innerHTML = minutes;
-}, 1000);
+function updateClock() {
+var t = getTimeRemaining(document.getElementById('launchDate').dataset.date);
+
+daysSpan.innerHTML = t.days;
+hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+// secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+if (t.total <= 0) {
+clearInterval(timeinterval);
+}
+}
+
+updateClock();
+var timeinterval = setInterval(updateClock, 1000);
+}
+
+var deadline = new Date(Date.parse(new Date(document.getElementById('launchDate').dataset.date)) + 30 * 24 * 60 * 60 * 1000);
+initializeClock('clockdiv', deadline);
 	</script>
 {% endblock %}

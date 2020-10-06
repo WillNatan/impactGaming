@@ -48,7 +48,8 @@
 					<h1>Mes évènements</h1>
 
 					<div class="event-list">
-						{% for event in events %}
+						{% if events %}
+							{% for event in events %}
 							<div class="event-card row no-gutters">
 								<div class="col-md-2">
 									<div class="event-date h-100">
@@ -117,6 +118,9 @@
 								
 							</div>
 						{% endfor %}
+						{% else %}
+							<p class="text-center mt-3 mb-3">Aucun évènement</p>
+						{% endif %}
 						{{ knp_pagination_render(events, 'home/pagination.html.twig') }}
 
 					</div>
